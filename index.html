@@ -268,7 +268,7 @@
       <thead><tr><th>Fiscal Year</th><th style="text-align:right">H&amp;W / FT</th><th style="text-align:right">Change</th><th style="text-align:right">Rank</th><th style="text-align:right">Statewide Median</th><th style="text-align:right">% of Median</th><th style="text-align:right">Adj. FON FT</th></tr></thead>
       <tbody id="historyBody"></tbody>
     </table></div>
-    <div style="font-size:0.72rem;color:#999;margin-top:8px">Uses the calculation selected above. Rank is out of all districts with data that year. ⟲ = prior-year figures carried forward (report not yet certified).</div>
+    <div style="font-size:0.72rem;color:#999;margin-top:8px">Uses the calculation selected above. Rank is out of all districts with data that year. ⟲ = prior-year figures carried forward (report not yet certified). † = FTEF data issue (hover for detail).</div>
   </div>
 
   <div class="chart-wrap">
@@ -347,7 +347,7 @@
     <li><strong>Copper Mountain</strong> — 8 counselors + 1 librarian (faculty directory + CCLibrarians)</li>
     <li><strong>Palo Verde</strong> — 7 counselors + 1 librarian (faculty directory + CCLibrarians)</li>
   </ul>
-  Calbright excluded (no FON entry). Data year: 2025-26 (CCFS-311 actuals) with Fall 2025 FT FTEF. Compton, Desert, and San Joaquin Delta had not certified their 2025-26 CCFS-311 as of November 6, 2026; their 2024-25 figures are carried forward. Lassen, Imperial, Rio Hondo, and Copper Mountain show large one-year changes in state-reported FT FTEF (Fall 2024 → Fall 2025), which drive large rank changes; treat their positions with caution.
+  Calbright excluded (no FON entry). Data year: 2025-26 (CCFS-311 actuals) with Fall 2025 FT FTEF. Compton, Desert, and San Joaquin Delta had not certified their 2025-26 CCFS-311 as of November 6, 2026; their 2024-25 figures are carried forward. † Lassen is excluded from 2025-26 rankings and statistics because the district says its reported Fall 2025 FT FTEF (18.6) is an error; it currently has 40–41 full-time faculty. Imperial (145.0 → 98.3), Rio Hondo (239.1 → 202.3), and Copper Mountain (25.7 → 49.7) show large unverified one-year changes in FT FTEF from Fall 2024 to Fall 2025 and are flagged but included. In the Cross-Method tab, Lassen's 2024-25 figure is used.
   <br><br><strong>Note on instructional aides:</strong> Column 10 benefits include employer contributions for instructional aides (lab technicians, tutors, and other classified instructional support staff — Object 2200/2400), who are not counted in the FON FT denominator. This causes per-FT figures to be modestly overstated; the degree varies by district depending on the size of their instructional aide workforce.
   <br><br><strong>Basic Methodology:</strong> H&amp;W estimate = Employee Benefits (3000 series, ECS 84362 A Col 10) with no deductions. Denominator = raw FON FT with no counselor or librarian adjustment. This is a simpler calculation but will include STRS and Medicare employer contributions in the benefits figure, causing all values to be modestly overstated compared to Full Methodology. Useful as a quick reference or sanity check.
   <br><br><strong>COL Index (Cost of Living):</strong> A relative cost-of-living index for each district's primary county, based on the <a href="https://livingwage.mit.edu/states/06" target="_blank" style="color:#1a3a5c">MIT Living Wage Calculator</a>'s estimated living wage for one adult with no dependents (February 2026 data). The California statewide average is set to 100. A district with a COL Index of 83 is in a county roughly 17% below the state average cost of living; a district with 126 is about 26% above. <em>Green values (&lt;90) indicate lower-cost areas; red values (&gt;115) indicate higher-cost areas.</em> This index provides context for comparing H&amp;W figures across regions — the same dollar amount provides meaningfully different purchasing power depending on where a district is located. Hover any COL Index cell to see the county name. Note: multi-campus districts are assigned to their primary or largest campus county.
@@ -572,7 +572,8 @@ function ccfsSubtitle() {
 function setCcfsYear(y) {
   ccfsYear = y;
   document.getElementById('ccfsYearSelect').value = y;
-  districts = CCFS_YEARS[y];
+  districts = CCFS_YEARS[y].filter(d => !d.excluded);
+  excludedDistricts = CCFS_YEARS[y].filter(d => d.excluded);
   TAB_SUBTITLES.ccfs = ccfsSubtitle();
   const sub = document.getElementById('headerSub');
   if (document.querySelector('.tab-btn.active')?.getAttribute('onclick')?.includes("'ccfs'")) sub.innerHTML = TAB_SUBTITLES.ccfs;
@@ -585,17 +586,19 @@ function renderHistory() {
   document.getElementById('historyDistrict').textContent = focusedDistrict;
   let prev = null;
   const rows = CCFS_YEAR_LIST.map(y => {
-    const ds = CCFS_YEARS[y];
+    const all = CCFS_YEARS[y], ds = all.filter(d => !d.excluded);
     const vals = ds.map(d => s.getValue(d)).sort((a, b) => a - b), n = vals.length;
     const median = n % 2 ? vals[(n-1)/2] : (vals[n/2-1] + vals[n/2]) / 2;
     const d = ds.find(x => x.name === focusedDistrict);
+    const ex = all.find(x => x.name === focusedDistrict && x.excluded);
+    if (ex) return `<tr style="color:#999"><td>${y} <span style="color:#b45309;font-weight:700">†</span></td><td colspan="6" style="font-style:italic;white-space:normal">Excluded: ${ex.flag}</td></tr>`;
     if (!d) return `<tr><td>${y}</td><td colspan="6" style="color:#999">No data</td></tr>`;
     const v = s.getValue(d);
     const rank = vals.length - vals.lastIndexOf(v);
     const chg = prev ? ((v / prev - 1) * 100) : null; prev = v;
     const chgTxt = chg === null ? '—' : `<span style="color:${chg >= 0 ? '#1e8449' : '#c0392b'}">${chg >= 0 ? '+' : ''}${chg.toFixed(1)}%</span>`;
     const cur = y === ccfsYear ? ' style="background:#eff6ff;font-weight:600"' : '';
-    return `<tr${cur}><td>${y}${d.carried ? ' ⟲' : ''}</td><td class="num">${fmt(v)}</td><td class="num">${chgTxt}</td><td class="num">${rank} / ${n}</td><td class="num">${fmt(median)}</td><td class="num">${Math.round(v / median * 100)}%</td><td class="num">${s.getFtef(d)}</td></tr>`;
+    return `<tr${cur}><td>${y}${d.flag ? ' <span style="color:#b45309;font-weight:700" title="' + d.flag + '">†</span>' : ''}${d.carried ? ' ⟲' : ''}</td><td class="num">${fmt(v)}</td><td class="num">${chgTxt}</td><td class="num">${rank} / ${n}</td><td class="num">${fmt(median)}</td><td class="num">${Math.round(v / median * 100)}%</td><td class="num">${s.getFtef(d)}</td></tr>`;
   });
   document.getElementById('historyBody').innerHTML = rows.reverse().join('');
 }
@@ -645,11 +648,11 @@ function spearmanRho(ranks1, ranks2) {
 
 function buildCorrData() {
   // Full-72 ranking for context labels
-  const all72Sorted = [...districts].sort((a, b) => (b.hw/b.adjFtef) - (a.hw/a.adjFtef));
+  const all72Sorted = [...CORR_DISTRICTS].sort((a, b) => (b.hw/b.adjFtef) - (a.hw/a.adjFtef));
 
   // ── Build 71-district pool: all CCFS districts that have ACCCA y25 data ──
   const pool = [];
-  districts.forEach(d => {
+  CORR_DISTRICTS.forEach(d => {
     const accca = ACCCA_DATA.find(a => a.ccfs === d.name);
     if (!accca || accca.y25 == null) return; // excludes MiraCosta + any missing
     const yfaEntry = yfaData.find(y => (YFA_TO_CCFS[y.name] || y.name) === d.name && y.avg != null);
@@ -1162,7 +1165,7 @@ const CCFS_YEARS = {
   {name:"West Hills",            ftef:104,    adjFtef:86,   instrBenefits:8235292,   hw:4661554.53,  code:"580", step21:144441, region:"Central Valley", multi:true},
   {name:"Shasta-Tehama-Trinity", ftef:132,    adjFtef:129.5,   instrBenefits:9759807,   hw:5438630.47,  code:"170", step21:112552, selfInsured:false, region:"Northern CA",    multi:false},
   {name:"Barstow",               ftef:41.5,   adjFtef:39,  instrBenefits:3251805,   hw:1729776.85,  code:"910", step21:135099, region:"Inland Empire",  multi:false},
-  {name:"Copper Mountain",       ftef:49.7,   adjFtef:40.7,  instrBenefits:2530018,   hw:1173663.95,  code:"970", step21:136887, region:"Inland Empire",  multi:false},
+  {name:"Copper Mountain",       ftef:49.7,   adjFtef:40.7,  instrBenefits:2530018,   hw:1173663.95,  code:"970", flag:"FT FTEF rose from 25.7 (Fall 2024) to 49.7 (Fall 2025). Not verified.", step21:136887, region:"Inland Empire",  multi:false},
   {name:"Citrus",                ftef:159,    adjFtef:135,   instrBenefits:15152908,  hw:8045419.03,  code:"820", step21:135770, region:"Greater LA",     multi:false},
   {name:"Mendocino-Lake",        ftef:62,     adjFtef:59.5,    instrBenefits:5050719,   hw:2638870.30,  code:"140", step21:134638, region:"Northern CA",    multi:false},
   {name:"West Valley-Mission",   ftef:265,    adjFtef:242.1,   instrBenefits:25019652,  hw:10983553.19,  code:"490", step21:171237, region:"Bay Area",       multi:true},
@@ -1172,13 +1175,13 @@ const CCFS_YEARS = {
   {name:"Mt. San Antonio",       ftef:428,    adjFtef:400.9,   instrBenefits:41340294,  hw:18314701.05, code:"850", step21:158955, region:"Greater LA",     multi:false},
   {name:"Yosemite",              ftef:316,    adjFtef:279.6,   instrBenefits:22624610,  hw:12171785.92, code:"590", step21:124814, isYosemite:true,         region:"Central Valley", multi:true,  ccci:true},
   {name:"Siskiyou",              ftef:46.7,   adjFtef:44.2,  instrBenefits:2777698,   hw:1622611.68,  code:"180", step21:117203, region:"Northern CA",    multi:false},
-  {name:"Rio Hondo",             ftef:202.3,  adjFtef:190, instrBenefits:24229350,  hw:16231447.41,  code:"880", step21:144482, region:"Greater LA",     multi:false},
+  {name:"Rio Hondo",             ftef:202.3,  adjFtef:190, instrBenefits:24229350,  hw:16231447.41,  code:"880", flag:"FT FTEF fell from 239.1 (Fall 2024) to 202.3 (Fall 2025), and instructional benefits rose 51%. Not verified.", step21:144482, region:"Greater LA",     multi:false},
   {name:"Sierra",                ftef:240.2,  adjFtef:211.8, instrBenefits:17160898,  hw:8840143.82,  code:"270", step21:128545, region:"Sacramento",     multi:false},
   {name:"Compton",               ftef:102.5,  adjFtef:94.8, instrBenefits:5773698,   hw:3596214.86,  code:"710", carried:true, step21:104489, region:"Greater LA",     multi:false},
   {name:"Chabot-Las Positas",    ftef:279,    adjFtef:253.9,   instrBenefits:22075174,  hw:10285361.78,  code:"480", step21:142394, region:"Bay Area",       multi:true,  ccci:true},
   {name:"Ohlone",                ftef:104,    adjFtef:90.4,   instrBenefits:7846801,   hw:3070748.78,  code:"430", step21:160116, region:"Bay Area",       multi:false, ccci:true},
-  {name:"Imperial",              ftef:98.3,    adjFtef:79.9,   instrBenefits:12252861,   hw:7572655.83,  code:"30",  step21:151309, region:"San Diego",      multi:false},
-  {name:"Lassen",                ftef:18.6,   adjFtef:12.3,  instrBenefits:2552910,   hw:1264386.98,  code:"130", step21:127611, region:"Northern CA",    multi:false},
+  {name:"Imperial",              ftef:98.3,    adjFtef:79.9,   instrBenefits:12252861,   hw:7572655.83,  code:"30", flag:"FT FTEF fell from 145.0 (Fall 2024) to 98.3 (Fall 2025), and instructional benefits rose 28%. Not verified.",  step21:151309, region:"San Diego",      multi:false},
+  {name:"Lassen",                ftef:18.6,   adjFtef:12.3,  instrBenefits:2552910,   hw:1264386.98,  code:"130", excluded:true, flag:"Fall 2025 FT FTEF reported as 18.6; the district says this figure is an error and it currently has 40–41 full-time faculty. Excluded from 2025-26 rankings and statistics.", step21:127611, region:"Northern CA",    multi:false},
   {name:"Lake Tahoe",            ftef:37.3,   adjFtef:30.3,  instrBenefits:2146808,   hw:988757.14,  code:"220", step21:129355, region:"Sacramento",     multi:false},
   {name:"Kern",                  ftef:502,    adjFtef:450.6,   instrBenefits:34294329,  hw:18105937.86, code:"520", step21:145781, region:"Central Valley", multi:true},
   {name:"Sequoias",              ftef:210,  adjFtef:191, instrBenefits:13624283,  hw:6573297.08,  code:"560", step21:141400, region:"Central Valley", multi:false},
@@ -1274,12 +1277,20 @@ const CCFS_YEARS = {
 ],
 };
 const CCFS_YEAR_META = {
-  "2025-26": { fon:'Fall 2025', note:'Compton, Desert, and San Joaquin Delta had not certified 2025-26 CCFS-311 reports as of Nov 6, 2026; their 2024-25 figures are carried forward (marked ⟲).' },
+  "2025-26": { fon:'Fall 2025', note:'⟲ Compton, Desert, and San Joaquin Delta had not certified 2025-26 CCFS-311 reports as of Nov 6, 2026; their 2024-25 figures are carried forward. † Lassen is excluded from 2025-26 rankings and statistics: the district says its reported Fall 2025 FT FTEF (18.6) is an error; it currently has 40–41 full-time faculty. Imperial, Rio Hondo, and Copper Mountain are flagged for unusually large one-year FTEF changes that have not been verified; treat their ranks with caution.' },
   "2024-25": { fon:'Fall 2024', note:'' },
 };
 const CCFS_YEAR_LIST = Object.keys(CCFS_YEARS).sort();
 let ccfsYear = CCFS_YEAR_LIST[CCFS_YEAR_LIST.length-1];
-let districts = CCFS_YEARS[ccfsYear];
+let districts = CCFS_YEARS[ccfsYear].filter(d => !d.excluded);
+let excludedDistricts = CCFS_YEARS[ccfsYear].filter(d => d.excluded);
+// Correlation tab: latest year, with excluded districts carried forward from the prior year
+const CORR_DISTRICTS = CCFS_YEARS[ccfsYear].map(d => {
+  if (!d.excluded) return d;
+  const prevYr = CCFS_YEAR_LIST[CCFS_YEAR_LIST.length - 2];
+  const p = (CCFS_YEARS[prevYr] || []).find(x => x.name === d.name);
+  return p ? { ...p, carried: true } : null;
+}).filter(Boolean);
 
 // ── Cost-of-Living index per district (MIT Living Wage Calculator, Feb 2026)
 // 1 adult, 0 children. CA statewide avg ($30.48/hr) = 100.
@@ -1412,8 +1423,8 @@ function initChart() {
         x: { ticks: { callback: v => indexView ? v.toFixed(0) : ('$' + (v/1000).toFixed(0) + 'k'), font: { size: 11 } }, grid: { color: '#eee' } },
         y: {
           ticks: {
-            font: ctx => { const lbl = ctx.tick.label.replace(/( \*)?( ⟲)?$/, ''); return { size: lbl === focusedDistrict ? 13 : 11, weight: lbl === focusedDistrict ? 'bold' : 'normal' }; },
-            color: ctx => ctx.tick.label.replace(/( \*)?( ⟲)?$/, '') === focusedDistrict ? '#2563eb' : '#333',
+            font: ctx => { const lbl = ctx.tick.label.replace(/( \*)?( †)?( ⟲)?$/, ''); return { size: lbl === focusedDistrict ? 13 : 11, weight: lbl === focusedDistrict ? 'bold' : 'normal' }; },
+            color: ctx => ctx.tick.label.replace(/( \*)?( †)?( ⟲)?$/, '') === focusedDistrict ? '#2563eb' : '#333',
           },
           grid: { display: false }
         }
@@ -1427,14 +1438,14 @@ function initChart() {
 function updateChart(ranked) {
   if (!chartInitialized) return;
   const chartMedian = computeStats(ranked).median;
-  chart.data.labels = ranked.map(d => (d.selfInsured ? d.name + ' *' : d.name) + (d.carried ? ' ⟲' : ''));
+  chart.data.labels = ranked.map(d => (d.selfInsured ? d.name + ' *' : d.name) + (d.flag ? ' †' : '') + (d.carried ? ' ⟲' : ''));
   chart.data.datasets[0].data = ranked.map(d => indexView ? d.scenarioValue / chartMedian * 100 : d.scenarioValue);
   chart.data.datasets[0].backgroundColor = ranked.map(d => isFocused(d) ? '#2563eb' : TIER_COLORS[tier(d.rank)-1]);
   chart.data.datasets[0].borderColor = ranked.map(d => isFocused(d) ? '#1e40af' : 'transparent');
   chart.data.datasets[0].borderWidth = ranked.map(d => isFocused(d) ? 3 : 0);
   const fd = focusedDistrict;
-  chart.options.scales.y.ticks.font  = ctx => { const lbl = ctx.tick.label.replace(/( \*)?( ⟲)?$/, ''); return { size: lbl === fd ? 13 : 11, weight: lbl === fd ? 'bold' : 'normal' }; };
-  chart.options.scales.y.ticks.color = ctx => ctx.tick.label.replace(/( \*)?( ⟲)?$/, '') === fd ? '#2563eb' : '#333';
+  chart.options.scales.y.ticks.font  = ctx => { const lbl = ctx.tick.label.replace(/( \*)?( †)?( ⟲)?$/, ''); return { size: lbl === fd ? 13 : 11, weight: lbl === fd ? 'bold' : 'normal' }; };
+  chart.options.scales.y.ticks.color = ctx => ctx.tick.label.replace(/( \*)?( †)?( ⟲)?$/, '') === fd ? '#2563eb' : '#333';
   chart.update();
 }
 
@@ -1473,7 +1484,7 @@ function buildCcfsTable(data) {
       : `${fmt(d.instrBenefits)} (raw benefits) \u00F7 ${d.ftef} (FON FT) = ${fmt(d.instrBenefits / d.ftef)}${indexView ? '\n\nShown as index: ' + fmtIdx(d.scenarioValue, stats.median) + ' (statewide median = 100)' : ''}`;
     tr.innerHTML = `
       <td class="rank">#${i + 1}</td>
-      <td class="district-name">${d.name}${d.selfInsured ? ' <span title="Self-insured — may be understated. See footnote.">*</span>' : ''}${isFocused(d) ? '<span class="yosemite-badge">SELECTED DISTRICT</span>' : ''}</td>
+      <td class="district-name">${d.name}${d.selfInsured ? ' <span title="Self-insured — may be understated. See footnote.">*</span>' : ''}${d.flag ? ` <span title="${d.flag}" style="color:#b45309;cursor:help;font-weight:700">†</span>` : ''}${d.carried ? ' <span title="Not yet certified for this year; prior-year figures carried forward." style="cursor:help">⟲</span>' : ''}${isFocused(d) ? '<span class="yosemite-badge">SELECTED DISTRICT</span>' : ''}</td>
       <td class="num" title="${hwCellTip}" style="cursor:help">${indexView ? fmtIdx(d.scenarioHw, medHw) : fmt(d.scenarioHw)}</td>
       <td class="num" title="${(() => { const adj = Math.round((d.ftef - d.adjFtef) * 10) / 10; if (d.scenarioFtef === d.ftef) return `Raw FON FT: ${d.ftef} — no adjustment in Basic mode`; if (adj === 0) return `FON FT: ${d.ftef} — no counselor/librarian data available`; return `${d.ftef} (FON FT) \u2212 ${adj} (counselors & librarians) = ${d.adjFtef}`; })()}" style="cursor:help">${d.scenarioFtef.toLocaleString()}</td>
       <td class="hw-value" title="${hwPerTip}" style="cursor:help">${indexView ? fmtIdx(d.scenarioValue, stats.median) : fmt(d.scenarioValue)}</td>
@@ -1493,11 +1504,27 @@ function buildCcfsTable(data) {
     tr.dataset.step21 = d.step21; tr.dataset.totalComp = totalComp;
     tbody.appendChild(tr);
   });
+  excludedDistricts.forEach(d => {
+    const tr = document.createElement('tr');
+    tr.style.color = '#999'; tr.style.background = '#fafafa';
+    tr.innerHTML = `<td class="rank">—</td><td class="district-name">${d.name} <span title="${d.flag}" style="color:#b45309;cursor:help;font-weight:700">†</span></td><td colspan="8" style="font-size:0.8rem;font-style:italic">Excluded from ${ccfsYear}: ${d.flag}</td>`;
+    tbody.appendChild(tr);
+  });
 }
 
 function updateCcfsCards(ranked, stats) {
   const yos = ranked.find(d => isFocused(d));
-  if (!yos) return;
+  if (!yos) {
+    document.getElementById('cardMean').textContent = fmt(stats.mean);
+    document.getElementById('cardMedian').textContent = fmt(stats.median);
+    document.getElementById('cardRange').textContent = fmt(stats.min) + ' – ' + fmt(stats.max);
+    document.getElementById('cardRangeSub').textContent = ranked[ranked.length-1].name + ' to ' + ranked[0].name;
+    document.getElementById('cardYosemite').textContent = '—';
+    document.getElementById('cardYosemiteRank').textContent = `Excluded from ${ccfsYear} (see †)`;
+    document.getElementById('cardYosemiteSub').innerHTML = '';
+    document.getElementById('cardYosemiteMean').innerHTML = '';
+    return;
+  }
   const minD = ranked[ranked.length-1], maxD = ranked[0];
   const diff = yos.scenarioValue - stats.median;
   const diffMean = yos.scenarioValue - stats.mean;
@@ -1508,7 +1535,7 @@ function updateCcfsCards(ranked, stats) {
     document.getElementById('cardYosemite').textContent = fmtIdx(yos.scenarioValue, stats.median);
     const idxDiff = yos.scenarioValue / stats.median * 100 - 100;
     const idxDiffMean = yos.scenarioValue / stats.mean * 100 - 100;
-    document.getElementById('cardYosemiteRank').textContent = `Rank ${yos.rank} of 72`;
+    document.getElementById('cardYosemiteRank').textContent = `Rank ${yos.rank} of ${ranked.length}`;
     document.getElementById('cardYosemiteSub').innerHTML =
       `<span>vs. median (100)</span><span>${idxDiff >= 0 ? '+' : ''}${idxDiff.toFixed(1)} pts</span>`;
     document.getElementById('cardYosemiteMean').innerHTML =
@@ -1518,7 +1545,7 @@ function updateCcfsCards(ranked, stats) {
     document.getElementById('cardMedian').textContent = fmt(stats.median);
     document.getElementById('cardRange').textContent = fmt(stats.min) + ' – ' + fmt(stats.max);
     document.getElementById('cardYosemite').textContent = fmt(yos.scenarioValue);
-    document.getElementById('cardYosemiteRank').textContent = `Rank ${yos.rank} of 72`;
+    document.getElementById('cardYosemiteRank').textContent = `Rank ${yos.rank} of ${ranked.length}`;
     document.getElementById('cardYosemiteSub').innerHTML =
       `<span>vs. median</span><span>$${Math.round(Math.abs(diff)).toLocaleString()} ${diff >= 0 ? 'above' : 'below'}</span>`;
     document.getElementById('cardYosemiteMean').innerHTML =
@@ -2141,7 +2168,7 @@ document.getElementById('yfaTabBtn').textContent = `YFA Benefits Survey — ${yf
 
 // Populate global district selector
 const sel = document.getElementById('districtSelector');
-[...districts].sort((a,b) => a.name.localeCompare(b.name)).forEach(d => {
+[...new Map(Object.values(CCFS_YEARS).flat().map(d => [d.name, d])).values()].sort((a,b) => a.name.localeCompare(b.name)).forEach(d => {
   const opt = document.createElement('option');
   opt.value = d.name;
   opt.textContent = d.name;
