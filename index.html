@@ -251,20 +251,18 @@
     <span>Year:</span>
     <select id="ccfsYearSelect" class="ctrl-select" style="font-size:0.82rem;padding:6px 10px" onchange="setCcfsYear(this.value)" title="Fiscal year of CCFS-311 data (and matching fall FTEF)"></select>
     <span style="margin-left:12px">Calculation:</span>
-    <button class="scenario-btn active" id="btn-full" onclick="setScenario('full')">
+    <button class="scenario-btn active" id="btn-full" onclick="setScenario('full')" title="Instruction-only benefits, minus estimated STRS and Medicare, ÷ counselor- and librarian-adjusted FON FT">
       Full Methodology
-      <span class="btn-sub">Pension &amp; Medicare backed out &divide; counselor &amp; librarian-adjusted FON FT</span>
     </button>
-    <button class="scenario-btn" id="btn-alloc" onclick="setScenario('alloc')">
+    <button class="scenario-btn" id="btn-alloc" onclick="setScenario('alloc')" title="District-wide health &amp; welfare (pensions, Social Security and Medicare netted out), allocated to instruction by salary share, ÷ adjusted FON FT">
       Allocated
-      <span class="btn-sub">District-wide H&amp;W, pensions netted out, allocated to instruction by salary share</span>
     </button>
-    <button class="scenario-btn" id="btn-basic" onclick="setScenario('basic')">
+    <button class="scenario-btn" id="btn-basic" onclick="setScenario('basic')" title="Raw instruction benefits ÷ raw FON FT, no deductions">
       Basic
-      <span class="btn-sub">Raw benefits total &divide; raw FON FT — no deductions</span>
     </button>
     <button class="comp-toggle-btn" onclick="downloadCsv()" title="Download full dataset as CSV" style="margin-left:auto;align-self:flex-end">⬇ Download CSV</button>
   </div>
+  <div id="scenarioDesc" style="font-size:0.78rem;color:#555;margin:-12px 0 16px"></div>
   <div id="ccfsYearNote" style="display:none;font-size:0.78rem;color:#78350f;background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:6px 12px;margin:-10px 0 16px"></div>
   <div class="chart-wrap" id="historyWrap">
     <h2>Year-over-Year — <span id="historyDistrict">Yosemite</span></h2>
@@ -1608,8 +1606,14 @@ function sortCcfs(col) {
   filterCcfsTable();
 }
 
+const SCENARIO_DESC = {
+  full:  '<strong>Full Methodology:</strong> instruction-only benefits, minus estimated STRS and Medicare, divided by full-time faculty adjusted to remove counselors and librarians.',
+  alloc: '<strong>Allocated:</strong> the district\'s total health &amp; welfare (pensions, Social Security and Medicare netted out), allocated to instruction by salary share, divided by adjusted full-time faculty. Corrects for districts that code benefits unevenly.',
+  basic: '<strong>Basic:</strong> raw instruction benefits divided by raw full-time faculty, with no deductions. A quick sanity check only.',
+};
 function setScenario(s) {
   currentScenario = s;
+  const sd = document.getElementById('scenarioDesc'); if (sd) sd.innerHTML = SCENARIO_DESC[s] + ' <span style="color:#999">See methodology notes below.</span>';
   ['full','alloc','basic'].forEach(k => document.getElementById('btn-' + k).classList.toggle('active', k === s));
   document.getElementById('cth3').textContent = s === 'basic' ? 'FON FT' : 'Adj. FON FT';
   document.getElementById('cth2').title = s === 'alloc'
