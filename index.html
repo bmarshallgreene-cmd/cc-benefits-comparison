@@ -338,15 +338,16 @@
 <footer>
   <strong>Full Methodology:</strong> H&amp;W estimate = Employee Benefits (3000 series, Col 10) minus estimated STRS (19.1%) and Medicare (1.45%) contributions. Benefits data is drawn from the <strong>Analysis of Compliance with the 50 Percent Law (ECS 84362)</strong> within the CCFS-311 Annual Report — the specific schedule that breaks expenditures out by program area, where Column 10 represents direct instructional programs only. Denominator = FON FT (Faculty Obligation Number full-time headcount) minus tenured/tenure-track FTEF in counseling and library roles, sourced from CCCCO Fall 2025 staffing data (ASA codes 6120, 6310, 6320, 6390, 6410, 6420, 6430). This adjustment removes non-instructional faculty from the denominator to better match the instructional-program-only benefits in the numerator. For eight districts reporting &lt;5 FTEF (suppressed), 2.5 was used as a midpoint estimate. For eight additional districts where CCCCO data was zero or missing, counselor and librarian headcounts were manually researched from faculty directories, seniority lists, and the Council of Chief Librarians:
   <ul style="text-align:left;margin:8px auto;max-width:900px;color:#999;font-size:0.75rem">
-    <li><strong>Antelope Valley</strong> — 19 counselors + 4 librarians (2024-25 college catalog)</li>
-    <li><strong>Citrus</strong> — 21 counselors + 3 librarians (full-time faculty directory)</li>
-    <li><strong>Gavilan</strong> — ~15 counselors + 2 librarians (2021 faculty roster; moderate confidence)</li>
-    <li><strong>Lake Tahoe</strong> — 5 counselors + 2 librarians (faculty directory)</li>
-    <li><strong>Redwoods</strong> — 5 counselors + 1 librarian (2024-25 faculty seniority list)</li>
-    <li><strong>Solano</strong> — 7 counselors + 3 librarians (employee directory + CCLibrarians)</li>
-    <li><strong>Copper Mountain</strong> — 8 counselors + 1 librarian (faculty directory + CCLibrarians)</li>
-    <li><strong>Palo Verde</strong> — 7 counselors + 1 librarian (faculty directory + CCLibrarians)</li>
+    <li><strong>Antelope Valley</strong> — 17 counselors + 4 librarians</li>
+    <li><strong>Citrus</strong> — 23 counselors + 3 librarians (librarian count confirmed by the library's 2026 program review)</li>
+    <li><strong>Gavilan</strong> — 10 counselors + 2 librarians (positions titled "FT Faculty")</li>
+    <li><strong>Lake Tahoe</strong> — 5 counselors + 1 librarian (librarian from the current library staff page; no full-time librarian on the 2024 payroll)</li>
+    <li><strong>Redwoods</strong> — 5 counselors + 1 librarian (Fall 2024 faculty seniority list; no newer list posted)</li>
+    <li><strong>Solano</strong> — 10 counselors + 3 librarians</li>
+    <li><strong>Copper Mountain</strong> — 3 counselors + 1 librarian</li>
+    <li><strong>Palo Verde</strong> — 7 counselors + 0 librarians</li>
   </ul>
+  <span style="font-size:0.75rem">Unless noted, these counts come from 2024 calendar-year payroll records (State Controller data via Transparent California, updated Nov 9, 2026): employees with counselor or librarian titles and full-year faculty pay and benefits. Temporary or non-tenure-track positions, administrators, adjuncts, classified staff, and mental-health or outreach counselors are excluded. The same deductions are applied to every year.</span>
   Calbright excluded (no FON entry). Data year: 2025-26 (CCFS-311 actuals) with Fall 2025 FT FTEF. Compton, Desert, and San Joaquin Delta had not certified their 2025-26 CCFS-311 as of November 6, 2026; their 2024-25 figures are carried forward. † Lassen is excluded from 2025-26 rankings and statistics because the district says its reported Fall 2025 FT FTEF (18.6) is an error; it currently has 40–41 full-time faculty. Imperial (145.0 → 98.3), Rio Hondo (239.1 → 202.3), and Copper Mountain (25.7 → 49.7) show large unverified one-year changes in FT FTEF from Fall 2024 to Fall 2025 and are flagged but included. In the Cross-Method tab, Lassen's 2024-25 figure is used.
   <br><br><strong>Note on instructional aides:</strong> Column 10 benefits include employer contributions for instructional aides (lab technicians, tutors, and other classified instructional support staff — Object 2200/2400), who are not counted in the FON FT denominator. This causes per-FT figures to be modestly overstated; the degree varies by district depending on the size of their instructional aide workforce.
   <br><br><strong>Basic Methodology:</strong> H&amp;W estimate = Employee Benefits (3000 series, ECS 84362 A Col 10) with no deductions. Denominator = raw FON FT with no counselor or librarian adjustment. This is a simpler calculation but will include STRS and Medicare employer contributions in the benefits figure, causing all values to be modestly overstated compared to Full Methodology. Useful as a quick reference or sanity check.
@@ -1146,13 +1147,13 @@ const CCFS_YEARS = {
   {name:"South Orange",          ftef:400.3,  adjFtef:344.5, instrBenefits:42753666,  hw:21793383.81, code:"890", step21:164526, region:"Greater LA",     multi:true},
   {name:"San Francisco",         ftef:339,  adjFtef:326.6, instrBenefits:26383262,  hw:14745533.75, code:"360", step21:136935, region:"Bay Area",       multi:false},
   {name:"Coast",                 ftef:405.1,  adjFtef:353.2, instrBenefits:41345309,  hw:23583628.15, code:"830", step21:149341, region:"Greater LA",     multi:true},
-  {name:"Solano",                ftef:142,    adjFtef:132,   instrBenefits:11258067,  hw:6280970.85,  code:"280", step21:136647, region:"Bay Area",       multi:false},
+  {name:"Solano",                ftef:142,    adjFtef:129,   instrBenefits:11258067,  hw:6280970.85,  code:"280", step21:136647, region:"Bay Area",       multi:false},
   {name:"Chaffey",               ftef:246,  adjFtef:220.7, instrBenefits:23203035,  hw:13187067.34, code:"920", step21:135273, region:"Inland Empire",  multi:false},
   {name:"North Orange County",   ftef:538,    adjFtef:466.8,   instrBenefits:45915636,  hw:24405294.02, code:"860", step21:145711, region:"Greater LA",     multi:true},
   {name:"Peralta",               ftef:291.5,  adjFtef:224.1, instrBenefits:24033082,  hw:13877560.11, code:"340", step21:132209, region:"Bay Area",       multi:true},
   {name:"Butte",                 ftef:189,  adjFtef:169.6, instrBenefits:13971570,  hw:7182311.14,  code:"110", step21:142589, region:"Northern CA",    multi:false},
   {name:"El Camino",             ftef:310.6,  adjFtef:259, instrBenefits:24055197,  hw:10134270.66, code:"720", step21:146137, region:"Greater LA",     multi:false},
-  {name:"Gavilan Joint",         ftef:77.9,     adjFtef:60.9,    instrBenefits:5988055,   hw:3028389.34,  code:"440", step21:136697, region:"Bay Area",       multi:false},
+  {name:"Gavilan Joint",         ftef:77.9,     adjFtef:65.9,    instrBenefits:5988055,   hw:3028389.34,  code:"440", step21:136697, region:"Bay Area",       multi:false},
   {name:"Foothill-DeAnza",       ftef:404.5,  adjFtef:350.1, instrBenefits:34860026,  hw:17700675.72, code:"420", step21:131081, region:"Bay Area",       multi:true,  ccci:true},
   {name:"Los Angeles",           ftef:1602.2, adjFtef:1400.3,instrBenefits:135046966, hw:68162303.34, code:"740", step21:145110, region:"Greater LA",     multi:true},
   {name:"Marin",                 ftef:127,  adjFtef:108.5, instrBenefits:11073078,  hw:5819879.86,  code:"330", step21:156037, region:"Bay Area",       multi:false},
@@ -1165,8 +1166,8 @@ const CCFS_YEARS = {
   {name:"West Hills",            ftef:104,    adjFtef:86,   instrBenefits:8235292,   hw:4661554.53,  code:"580", step21:144441, region:"Central Valley", multi:true},
   {name:"Shasta-Tehama-Trinity", ftef:132,    adjFtef:129.5,   instrBenefits:9759807,   hw:5438630.47,  code:"170", step21:112552, selfInsured:false, region:"Northern CA",    multi:false},
   {name:"Barstow",               ftef:41.5,   adjFtef:39,  instrBenefits:3251805,   hw:1729776.85,  code:"910", step21:135099, region:"Inland Empire",  multi:false},
-  {name:"Copper Mountain",       ftef:49.7,   adjFtef:40.7,  instrBenefits:2530018,   hw:1173663.95,  code:"970", flag:"FT FTEF rose from 25.7 (Fall 2024) to 49.7 (Fall 2025). Not verified.", step21:136887, region:"Inland Empire",  multi:false},
-  {name:"Citrus",                ftef:159,    adjFtef:135,   instrBenefits:15152908,  hw:8045419.03,  code:"820", step21:135770, region:"Greater LA",     multi:false},
+  {name:"Copper Mountain",       ftef:49.7,   adjFtef:45.7,  instrBenefits:2530018,   hw:1173663.95,  code:"970", flag:"FT FTEF rose from 25.7 (Fall 2024) to 49.7 (Fall 2025). Not verified.", step21:136887, region:"Inland Empire",  multi:false},
+  {name:"Citrus",                ftef:159,    adjFtef:133,   instrBenefits:15152908,  hw:8045419.03,  code:"820", step21:135770, region:"Greater LA",     multi:false},
   {name:"Mendocino-Lake",        ftef:62,     adjFtef:59.5,    instrBenefits:5050719,   hw:2638870.30,  code:"140", step21:134638, region:"Northern CA",    multi:false},
   {name:"West Valley-Mission",   ftef:265,    adjFtef:242.1,   instrBenefits:25019652,  hw:10983553.19,  code:"490", step21:171237, region:"Bay Area",       multi:true},
   {name:"Santa Clarita",         ftef:220.4,    adjFtef:199.4,   instrBenefits:17302015,  hw:7911403.36,  code:"660", step21:156156, region:"Greater LA",     multi:false},
@@ -1182,7 +1183,7 @@ const CCFS_YEARS = {
   {name:"Ohlone",                ftef:104,    adjFtef:90.4,   instrBenefits:7846801,   hw:3070748.78,  code:"430", step21:160116, region:"Bay Area",       multi:false, ccci:true},
   {name:"Imperial",              ftef:98.3,    adjFtef:79.9,   instrBenefits:12252861,   hw:7572655.83,  code:"30", flag:"FT FTEF fell from 145.0 (Fall 2024) to 98.3 (Fall 2025), and instructional benefits rose 28%. Not verified.",  step21:151309, region:"San Diego",      multi:false},
   {name:"Lassen",                ftef:18.6,   adjFtef:12.3,  instrBenefits:2552910,   hw:1264386.98,  code:"130", excluded:true, flag:"Fall 2025 FT FTEF reported as 18.6; the district says this figure is an error and it currently has 40–41 full-time faculty. Excluded from 2025-26 rankings and statistics.", step21:127611, region:"Northern CA",    multi:false},
-  {name:"Lake Tahoe",            ftef:37.3,   adjFtef:30.3,  instrBenefits:2146808,   hw:988757.14,  code:"220", step21:129355, region:"Sacramento",     multi:false},
+  {name:"Lake Tahoe",            ftef:37.3,   adjFtef:31.3,  instrBenefits:2146808,   hw:988757.14,  code:"220", step21:129355, region:"Sacramento",     multi:false},
   {name:"Kern",                  ftef:502,    adjFtef:450.6,   instrBenefits:34294329,  hw:18105937.86, code:"520", step21:145781, region:"Central Valley", multi:true},
   {name:"Sequoias",              ftef:210,  adjFtef:191, instrBenefits:13624283,  hw:6573297.08,  code:"560", step21:141400, region:"Central Valley", multi:false},
   {name:"Napa Valley",           ftef:94.8,   adjFtef:83.8,  instrBenefits:5722039,   hw:2894050.54,  code:"240", step21:122428, region:"Bay Area",       multi:false},
@@ -1192,11 +1193,11 @@ const CCFS_YEARS = {
   {name:"San Bernardino",        ftef:262.2,  adjFtef:223.3, instrBenefits:18751721,  hw:9002279.24,  code:"980", step21:128126, region:"Inland Empire",  multi:true},
   {name:"State Center",          ftef:694.3,  adjFtef:625.5, instrBenefits:40283758,  hw:20339847.58, code:"570", step21:140017, region:"Central Valley", multi:true},
   {name:"Mt. San Jacinto",       ftef:199.7,  adjFtef:197.2, instrBenefits:15054914,  hw:6280670.22,  code:"940", step21:154617, region:"Inland Empire",  multi:false},
-  {name:"Antelope Valley",       ftef:190.5,    adjFtef:167.5,   instrBenefits:12702466,  hw:4889149.06,  code:"620", step21:128034, region:"Greater LA",     multi:false},
+  {name:"Antelope Valley",       ftef:190.5,    adjFtef:169.5,   instrBenefits:12702466,  hw:4889149.06,  code:"620", step21:128034, region:"Greater LA",     multi:false},
   {name:"Los Rios",              ftef:934.9,  adjFtef:833.2, instrBenefits:58836878,  hw:24891305.84, code:"230", step21:124248, region:"Sacramento",     multi:true},
   {name:"Sonoma",         ftef:296,  adjFtef:248.8, instrBenefits:20706294,  hw:9019466.05,  code:"260", step21:144619, region:"Bay Area",       multi:false, ccci:true},
   {name:"San Luis Obispo",       ftef:140.4,  adjFtef:137.9, instrBenefits:9467180,   hw:4153145.22,  code:"640", step21:131421, region:"Central Coast",  multi:false},
-  {name:"Palo Verde",            ftef:49,     adjFtef:41,    instrBenefits:2874834,   hw:1428497.05,   code:"950", step21:142326, region:"Inland Empire",  multi:false},
+  {name:"Palo Verde",            ftef:49,     adjFtef:42,    instrBenefits:2874834,   hw:1428497.05,   code:"950", step21:142326, region:"Inland Empire",  multi:false},
   {name:"Feather River",         ftef:25,     adjFtef:22.5,    instrBenefits:2016491,   hw:1071385.61,   code:"120", step21:125126, region:"Northern CA",    multi:false},
   {name:"Allan Hancock",         ftef:157.7,  adjFtef:129.3, instrBenefits:8167234,   hw:3257273.46,  code:"610", step21:127485, region:"Central Coast",  multi:false, ccci:true},
   {name:"Pasadena",         ftef:425,    adjFtef:390.8,   instrBenefits:24400769,  hw:7266865.78,  code:"770", step21:129764,                            region:"Greater LA",     multi:false, ccci:true},
@@ -1220,13 +1221,13 @@ const CCFS_YEARS = {
   {name:"South Orange",          ftef:406.3,  adjFtef:350.5, instrBenefits:38754826,  hw:19149119.25, code:"890", step21:164526, region:"Greater LA",     multi:true},
   {name:"San Francisco",         ftef:345.9,  adjFtef:333.5, instrBenefits:26927954,  hw:15345210.36, code:"360", step21:136935, region:"Bay Area",       multi:false},
   {name:"Coast",                 ftef:415.2,  adjFtef:363.3, instrBenefits:35827144,  hw:18525346.87, code:"830", step21:149341, region:"Greater LA",     multi:true},
-  {name:"Solano",                ftef:134,    adjFtef:124.0,   instrBenefits:10776008,  hw:6002062.57,  code:"280", step21:136647, region:"Bay Area",       multi:false},
+  {name:"Solano",                ftef:134,    adjFtef:121,   instrBenefits:10776008,  hw:6002062.57,  code:"280", step21:136647, region:"Bay Area",       multi:false},
   {name:"Chaffey",               ftef:240.2,  adjFtef:214.9, instrBenefits:20751329,  hw:10671306.38, code:"920", step21:135273, region:"Inland Empire",  multi:false},
   {name:"North Orange County",   ftef:531,    adjFtef:459.8,   instrBenefits:43404737,  hw:23490633.53, code:"860", step21:145711, region:"Greater LA",     multi:true},
   {name:"Peralta",               ftef:296.5,  adjFtef:229.1, instrBenefits:23347753,  hw:13112212.50, code:"340", step21:132209, region:"Bay Area",       multi:true},
   {name:"Butte",                 ftef:183.4,  adjFtef:164.0, instrBenefits:14271743,  hw:8083039.19,  code:"110", step21:142589, region:"Northern CA",    multi:false},
   {name:"El Camino",             ftef:334.9,  adjFtef:283.3, instrBenefits:27806252,  hw:14605046.26, code:"720", step21:146137, region:"Greater LA",     multi:false},
-  {name:"Gavilan Joint",         ftef:74,     adjFtef:57.0,    instrBenefits:5870020,   hw:3146322.18,  code:"440", step21:136697, region:"Bay Area",       multi:false},
+  {name:"Gavilan Joint",         ftef:74,     adjFtef:62,    instrBenefits:5870020,   hw:3146322.18,  code:"440", step21:136697, region:"Bay Area",       multi:false},
   {name:"Foothill-DeAnza",       ftef:404.2,  adjFtef:349.8, instrBenefits:33236852,  hw:17188737.21, code:"420", step21:131081, region:"Bay Area",       multi:true,  ccci:true},
   {name:"Los Angeles",           ftef:1621.5, adjFtef:1419.6,instrBenefits:130151730, hw:67706014.69, code:"740", step21:145110, region:"Greater LA",     multi:true},
   {name:"Marin",                 ftef:123.9,  adjFtef:105.4, instrBenefits:10135231,  hw:5065497.71,  code:"330", step21:156037, region:"Bay Area",       multi:false},
@@ -1239,8 +1240,8 @@ const CCFS_YEARS = {
   {name:"West Hills",            ftef:102,    adjFtef:84.0,   instrBenefits:7465735,   hw:4149608.62,  code:"580", step21:144441, region:"Central Valley", multi:true},
   {name:"Shasta-Tehama-Trinity", ftef:128,    adjFtef:125.5,   instrBenefits:9168756,   hw:5109557.65,  code:"170", step21:112552, selfInsured:false, region:"Northern CA",    multi:false},
   {name:"Barstow",               ftef:40.5,   adjFtef:38.0,  instrBenefits:2999091,   hw:1509040.51,  code:"910", step21:135099, region:"Inland Empire",  multi:false},
-  {name:"Copper Mountain",       ftef:25.7,   adjFtef:16.7,  instrBenefits:2304163,   hw:1022671.98,  code:"970", step21:136887, region:"Inland Empire",  multi:false},
-  {name:"Citrus",                ftef:162,    adjFtef:138.0,   instrBenefits:13265098,  hw:6281361.95,  code:"820", step21:135770, region:"Greater LA",     multi:false},
+  {name:"Copper Mountain",       ftef:25.7,   adjFtef:21.7,  instrBenefits:2304163,   hw:1022671.98,  code:"970", step21:136887, region:"Inland Empire",  multi:false},
+  {name:"Citrus",                ftef:162,    adjFtef:136,   instrBenefits:13265098,  hw:6281361.95,  code:"820", step21:135770, region:"Greater LA",     multi:false},
   {name:"Mendocino-Lake",        ftef:61,     adjFtef:58.5,    instrBenefits:4708602,   hw:2342534.59,  code:"140", step21:134638, region:"Northern CA",    multi:false},
   {name:"West Valley-Mission",   ftef:266,    adjFtef:243.1,   instrBenefits:22559390,  hw:9928555.47,  code:"490", step21:171237, region:"Bay Area",       multi:true},
   {name:"Santa Clarita",         ftef:226,    adjFtef:205.0,   instrBenefits:17465516,  hw:8382268.65,  code:"660", step21:156156, region:"Greater LA",     multi:false},
@@ -1256,7 +1257,7 @@ const CCFS_YEARS = {
   {name:"Ohlone",                ftef:112,    adjFtef:98.4,   instrBenefits:8566467,   hw:3794879.27,  code:"430", step21:160116, region:"Bay Area",       multi:false, ccci:true},
   {name:"Imperial",              ftef:145,    adjFtef:126.6,   instrBenefits:9558856,   hw:4992122.18,  code:"30",  step21:151309, region:"San Diego",      multi:false},
   {name:"Lassen",                ftef:36.1,   adjFtef:29.8,  instrBenefits:2507077,   hw:1202283.11,  code:"130", step21:127611, region:"Northern CA",    multi:false},
-  {name:"Lake Tahoe",            ftef:38.1,   adjFtef:31.1,  instrBenefits:2387569,   hw:1302042.58,  code:"220", step21:129355, region:"Sacramento",     multi:false},
+  {name:"Lake Tahoe",            ftef:38.1,   adjFtef:32.1,  instrBenefits:2387569,   hw:1302042.58,  code:"220", step21:129355, region:"Sacramento",     multi:false},
   {name:"Kern",                  ftef:495,    adjFtef:443.6,   instrBenefits:30459460,  hw:16040002.58, code:"520", step21:145781, region:"Central Valley", multi:true},
   {name:"Sequoias",              ftef:216.5,  adjFtef:197.5, instrBenefits:13353735,  hw:6589648.04,  code:"560", step21:141400, region:"Central Valley", multi:false},
   {name:"Napa Valley",           ftef:93.1,   adjFtef:82.1,  instrBenefits:5388059,   hw:2843451.75,  code:"240", step21:122428, region:"Bay Area",       multi:false},
@@ -1266,11 +1267,11 @@ const CCFS_YEARS = {
   {name:"San Bernardino",        ftef:285.9,  adjFtef:247.0, instrBenefits:17147415,  hw:7894983.20,  code:"980", step21:128126, region:"Inland Empire",  multi:true},
   {name:"State Center",          ftef:701.2,  adjFtef:632.4, instrBenefits:38229971,  hw:18684056.74, code:"570", step21:140017, region:"Central Valley", multi:true},
   {name:"Mt. San Jacinto",       ftef:217.8,  adjFtef:215.3, instrBenefits:12955658,  hw:5616296.81,  code:"940", step21:154617, region:"Inland Empire",  multi:false},
-  {name:"Antelope Valley",       ftef:190,    adjFtef:167.0,   instrBenefits:11759100,  hw:4734614.95,  code:"620", step21:128034, region:"Greater LA",     multi:false},
+  {name:"Antelope Valley",       ftef:190,    adjFtef:169,   instrBenefits:11759100,  hw:4734614.95,  code:"620", step21:128034, region:"Greater LA",     multi:false},
   {name:"Los Rios",              ftef:905.1,  adjFtef:803.4, instrBenefits:52731195,  hw:22037118.02, code:"230", step21:124248, region:"Sacramento",     multi:true},
   {name:"Sonoma",         ftef:308.1,  adjFtef:260.9, instrBenefits:18615884,  hw:7402900.21,  code:"260", step21:144619, region:"Bay Area",       multi:false, ccci:true},
   {name:"San Luis Obispo",       ftef:137.3,  adjFtef:134.8, instrBenefits:8424431,   hw:3374803.21,  code:"640", step21:131421, region:"Central Coast",  multi:false},
-  {name:"Palo Verde",            ftef:45,     adjFtef:37.0,    instrBenefits:2335441,   hw:922662.82,   code:"950", step21:142326, region:"Inland Empire",  multi:false},
+  {name:"Palo Verde",            ftef:45,     adjFtef:38,    instrBenefits:2335441,   hw:922662.82,   code:"950", step21:142326, region:"Inland Empire",  multi:false},
   {name:"Feather River",         ftef:29,     adjFtef:26.5,    instrBenefits:1481622,   hw:562688.47,   code:"120", step21:125126, region:"Northern CA",    multi:false},
   {name:"Allan Hancock",         ftef:163.3,  adjFtef:134.9, instrBenefits:7648219,   hw:3033897.75,  code:"610", step21:127485, region:"Central Coast",  multi:false, ccci:true},
   {name:"Pasadena",         ftef:422,    adjFtef:387.8,   instrBenefits:23984217,  hw:6949128.04,  code:"770", step21:129764,                            region:"Greater LA",     multi:false, ccci:true},

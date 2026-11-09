@@ -17,7 +17,10 @@ Each year folder holds the raw inputs used to build that year's dataset in `CCFS
 3. Run `compute.py` (it expects `site_2024.csv` with the prior-year rows as code,name,ftef,adjFtef,instrBenefits,hw).
 4. Add the new dataset to `CCFS_YEARS` and `CCFS_YEAR_META` in `index.html`.
 
-## Open items (as of Nov 6, 2026)
+## Counselor/librarian deductions (manual districts)
+Updated Nov 9, 2026 for Antelope Valley, Citrus, Gavilan, Lake Tahoe, Solano, Copper Mountain, and Palo Verde, using 2024 calendar-year payroll (State Controller data via Transparent California): employees with counselor or librarian titles and full-year faculty pay and benefits, excluding temporary/non-tenure-track, administrators, adjuncts, classified, and mental-health or outreach counselors. Redwoods uses its Fall 2024 seniority list. See the methodology list in index.html for the counts.
+
+## Open items (as of Nov 9, 2026)
 - When Compton, Desert, and San Joaquin Delta certify their 2025-26 reports, re-pull those three and replace their carried-forward rows.
-- The FTEF swings at Lassen, Imperial, Rio Hondo, and Copper Mountain are large enough to be reporting changes; verify them before citing their ranks.
+- Lassen is excluded from 2025-26 (district says the reported 18.6 FT FTEF is an error). Imperial, Rio Hondo, and Copper Mountain are flagged for unverified FTEF swings. A weekly scheduled task checks for the Fall 2026 FON report.
 - Possible backfill of 2019-20 through 2023-24. Basic is exact for those years; Full would reuse the Fall 2025 counselor/librarian deductions.
