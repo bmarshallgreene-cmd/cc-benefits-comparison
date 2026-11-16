@@ -221,7 +221,8 @@
 
 <div class="tab-bar">
   <span class="tab-bar-label">Section:</span>
-  <button class="tab-btn active" onclick="showTab('ccfs')">CCFS-311 Analysis — All 72 Districts</button>
+  <button class="tab-btn active" onclick="showTab('ccfs')">CCFS-311 Benefits Spending — All 72 Districts</button>
+  <button class="tab-btn" onclick="showTab('sco')" id="scoTabBtn">State Controller — Actual Health Contributions</button>
   <button class="tab-btn" onclick="showTab('accca')" id="acccaTabBtn">ACCCA Admin Benefits</button>
   <button class="tab-btn" onclick="showTab('yfa')" id="yfaTabBtn">YFA Benefits Survey</button>
   <button class="tab-btn" onclick="showTab('corr')" id="corrTabBtn">Cross-Method Analysis</button>
@@ -275,7 +276,7 @@
 
   <div class="chart-wrap">
     <div style="display:flex;align-items:center;margin-bottom:12px">
-      <h2 id="chartTitle" style="margin:0">Comparative Health &amp; Wellness Cost per FT Faculty &mdash; All Districts, Ranked</h2>
+      <h2 id="chartTitle" style="margin:0">Benefits Spending per FT Faculty (CCFS-311) &mdash; All Districts, Ranked</h2>
     </div>
     <div style="display:flex;align-items:center;gap:18px;margin-bottom:14px;flex-wrap:wrap">
       <span style="font-size:0.75rem;font-weight:600;color:#666;text-transform:uppercase;letter-spacing:0.05em">Color key:</span>
@@ -370,6 +371,40 @@
 </div>
 
 <!-- ══════════════════════════════════════════ TAB 2: YFA SURVEY ══ -->
+<div class="tab-panel" id="tab-sco">
+<div class="container">
+  <div class="cards" id="scoCards"></div>
+  <div class="table-wrap">
+    <div class="table-header">
+      <h2>Employer Health, Dental &amp; Vision Contribution per Full-Time Faculty Member</h2>
+      <div class="controls"><input class="search-box" type="text" id="scoSearch" placeholder="Filter by district…" oninput="renderSco()"></div>
+    </div>
+    <div class="table-scroll">
+    <table>
+      <thead><tr>
+        <th>Rank</th><th>District</th>
+        <th style="text-align:right;cursor:pointer" onclick="setScoSort('median')" title="Median employer contribution to health, dental and vision among matched full-time faculty. Default sort.">Median</th>
+        <th>vs. Median District</th>
+        <th style="text-align:right;cursor:pointer" onclick="setScoSort('mean')" title="Mean contribution, including faculty with no contribution reported.">Mean</th>
+        <th style="text-align:right;cursor:pointer" onclick="setScoSort('zero')" title="Share of matched faculty with no employer health contribution reported (opt-outs, or gaps in the district's report).">No contribution</th>
+        <th style="text-align:right;cursor:pointer" onclick="setScoSort('n')" title="Full-time faculty positions matched in the State Controller file, with Fall 2024 FT FTEF for comparison.">Faculty matched / FT FTEF</th>
+        <th style="text-align:right" title="YFA survey: average annual employer medical contribution (Spring 2026), where the district responded.">YFA survey avg.</th>
+        <th style="text-align:right" title="This site's CCFS-311 Allocated figure for 2024-25, for comparison. It measures total benefits spending, not health contributions alone.">CCFS-311 Allocated 2024-25</th>
+      </tr></thead>
+      <tbody id="scoBody"></tbody>
+    </table>
+    </div>
+    <div class="table-footer"><span id="scoCount"></span></div>
+  </div>
+<footer>
+  <strong>What this measures:</strong> the dollar amount each district reported paying toward health, dental and vision coverage for each full-time faculty position in calendar year 2024, from the State Controller's Government Compensation in California data. Unlike the CCFS-311 tab, it is a direct report of employer health contributions, with no pension estimates or allocation. It excludes retiree health, workers' compensation, unemployment insurance and coverage for other staff, which is why these figures are roughly half the CCFS-311 figures.
+  <br><br><strong>How faculty are identified:</strong> positions titled as instructor, faculty, professor, counselor or librarian (excluding adjunct, part-time, hourly, substitute and stipend titles) with total wages of at least $65,000. Districts that title faculty by discipline are matched by the faculty salary-schedule range instead. A district is included only if the matched positions number between 75% and 130% of its Fall 2024 full-time FTEF.
+  <br><br><strong>Coverage and limitations:</strong> 47 of 72 districts reported for 2024. <span id="scoSkippedNote"></span> Reporting quality varies: a high "no contribution" share may reflect opt-outs or incomplete reporting, and pulls the mean below the median. Districts may differ in what they include (for example composite rates, or life insurance). The YFA survey column covers medical only, so small differences from this column are expected. Calendar year 2024 spans the second half of fiscal 2023-24 and the first half of 2024-25.
+  <br><br><strong>Source:</strong> <a href="https://publicpay.ca.gov/Reports/RawExport.aspx" target="_blank" style="color:#1a3a5c">State Controller's Office, Government Compensation in California — Community College Districts, 2024</a> (file dated September 2025).
+</footer>
+</div>
+</div>
+
 <div class="tab-panel" id="tab-yfa">
 <div class="container">
 
@@ -625,6 +660,7 @@ function setFocusedDistrict(name) {
   buildAcccaCards();
   renderAccca();
   renderCorrTab();
+  renderSco();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1099,10 +1135,96 @@ function renderCorrTab() {
   buildCorrChart();
 }
 
+// ── State Controller tab ──
+const SCO_YEAR = 2024;
+const SCO_DATA = [
+  {"name": "San Jose-Evergreen", "n": 245, "ftef": 241.1, "median": 36951, "mean": 31850, "zero": 0.004, "method": "titles"},
+  {"name": "South Orange", "n": 525, "ftef": 406.3, "median": 29809, "mean": 22858, "zero": 0.206, "method": "titles"},
+  {"name": "Marin", "n": 113, "ftef": 123.9, "median": 27228, "mean": 23475, "zero": 0.0, "method": "titles"},
+  {"name": "Los Angeles", "n": 1430, "ftef": 1621.5, "median": 27171, "mean": 24277, "zero": 0.029, "method": "titles"},
+  {"name": "Merced", "n": 195, "ftef": 184.8, "median": 26862, "mean": 26124, "zero": 0.005, "method": "titles"},
+  {"name": "MiraCosta", "n": 246, "ftef": 208.8, "median": 26494, "mean": 22561, "zero": 0.033, "method": "titles"},
+  {"name": "Rio Hondo", "n": 187, "ftef": 239.1, "median": 26231, "mean": 23799, "zero": 0.005, "method": "titles"},
+  {"name": "Cerritos", "n": 280, "ftef": 269, "median": 25982, "mean": 22621, "zero": 0.007, "method": "titles"},
+  {"name": "Yosemite", "n": 281, "ftef": 315, "median": 25546, "mean": 24862, "zero": 0.0, "method": "titles"},
+  {"name": "Rancho Santiago", "n": 412, "ftef": 356, "median": 25341, "mean": 23131, "zero": 0.192, "method": "titles"},
+  {"name": "Chaffey", "n": 233, "ftef": 240.2, "median": 23832, "mean": 21865, "zero": 0.017, "method": "salary range"},
+  {"name": "West Valley-Mission", "n": 269, "ftef": 266, "median": 23682, "mean": 21037, "zero": 0.0, "method": "titles"},
+  {"name": "Sonoma", "n": 311, "ftef": 308.1, "median": 23506, "mean": 22829, "zero": 0.0, "method": "titles"},
+  {"name": "Chabot-Las Positas", "n": 311, "ftef": 285, "median": 23145, "mean": 25022, "zero": 0.026, "method": "titles"},
+  {"name": "Kern", "n": 435, "ftef": 495, "median": 22369, "mean": 22013, "zero": 0.002, "method": "titles"},
+  {"name": "Palo Verde", "n": 44, "ftef": 45, "median": 22236, "mean": 17227, "zero": 0.0, "method": "titles"},
+  {"name": "Gavilan Joint", "n": 77, "ftef": 74, "median": 21850, "mean": 20335, "zero": 0.026, "method": "titles"},
+  {"name": "West Kern", "n": 57, "ftef": 60, "median": 21481, "mean": 21481, "zero": 0.0, "method": "titles"},
+  {"name": "Palomar", "n": 252, "ftef": 298.3, "median": 21431, "mean": 21054, "zero": 0.004, "method": "titles"},
+  {"name": "Desert", "n": 149, "ftef": 148, "median": 20897, "mean": 19713, "zero": 0.013, "method": "titles"},
+  {"name": "Coast", "n": 434, "ftef": 415.2, "median": 20880, "mean": 20716, "zero": 0.0, "method": "titles"},
+  {"name": "Santa Clarita", "n": 236, "ftef": 226, "median": 20732, "mean": 16987, "zero": 0.123, "method": "titles"},
+  {"name": "Foothill-DeAnza", "n": 417, "ftef": 404.2, "median": 20335, "mean": 19810, "zero": 0.058, "method": "titles"},
+  {"name": "Grossmont-Cuyamaca", "n": 290, "ftef": 294.5, "median": 20170, "mean": 19751, "zero": 0.0, "method": "titles"},
+  {"name": "Los Rios", "n": 839, "ftef": 905.1, "median": 19944, "mean": 16943, "zero": 0.038, "method": "titles"},
+  {"name": "Sequoias", "n": 201, "ftef": 216.5, "median": 19847, "mean": 18379, "zero": 0.035, "method": "salary range"},
+  {"name": "Redwoods", "n": 91, "ftef": 72.3, "median": 19536, "mean": 15912, "zero": 0.154, "method": "titles"},
+  {"name": "Barstow", "n": 44, "ftef": 40.5, "median": 19431, "mean": 18703, "zero": 0.0, "method": "titles"},
+  {"name": "Feather River", "n": 28, "ftef": 29, "median": 17700, "mean": 14164, "zero": 0.179, "method": "titles"},
+  {"name": "Contra Costa", "n": 433, "ftef": 482.2, "median": 17638, "mean": 20017, "zero": 0.157, "method": "salary range"},
+  {"name": "Glendale", "n": 256, "ftef": 217.5, "median": 17456, "mean": 18762, "zero": 0.242, "method": "titles"},
+  {"name": "State Center", "n": 744, "ftef": 701.2, "median": 16802, "mean": 14519, "zero": 0.05, "method": "titles"},
+  {"name": "Ohlone", "n": 105, "ftef": 112, "median": 15432, "mean": 13317, "zero": 0.01, "method": "titles"},
+  {"name": "Santa Monica", "n": 432, "ftef": 347.9, "median": 15160, "mean": 18696, "zero": 0.049, "method": "titles"},
+  {"name": "Imperial", "n": 129, "ftef": 145, "median": 15144, "mean": 13565, "zero": 0.078, "method": "titles"},
+  {"name": "North Orange County", "n": 521, "ftef": 531, "median": 13818, "mean": 16285, "zero": 0.115, "method": "titles"},
+  {"name": "Shasta-Tehama-Trinity", "n": 113, "ftef": 128, "median": 12243, "mean": 12118, "zero": 0.0, "method": "titles"},
+  {"name": "Mt. San Jacinto", "n": 198, "ftef": 217.8, "median": 11524, "mean": 11550, "zero": 0.081, "method": "titles"},
+  {"name": "El Camino", "n": 344, "ftef": 334.9, "median": 11160, "mean": 13383, "zero": 0.113, "method": "titles"},
+  {"name": "Compton", "n": 101, "ftef": 102.5, "median": 11004, "mean": 8862, "zero": 0.228, "method": "titles"},
+  {"name": "Allan Hancock", "n": 169, "ftef": 163.3, "median": 7873, "mean": 10342, "zero": 0.006, "method": "titles"}
+];
+const SCO_SKIPPED = ["Mt. San Antonio", "Riverside", "San Luis Obispo", "San Mateo", "Solano", "Ventura"];
+
+let scoSort = { key: 'median', dir: -1 };
+function setScoSort(k) { scoSort = scoSort.key === k ? { key: k, dir: -scoSort.dir } : { key: k, dir: -1 }; renderSco(); }
+function renderSco() {
+  const ranked = [...SCO_DATA].sort((a, b) => b.median - a.median).map((d, i) => ({ ...d, rank: i + 1 }));
+  const meds = ranked.map(d => d.median).sort((a, b) => a - b), n = meds.length;
+  const med = n % 2 ? meds[(n-1)/2] : (meds[n/2-1] + meds[n/2]) / 2;
+  const max = meds[n-1];
+  const prior = CCFS_YEARS['2024-25'] || [];
+  const foc = ranked.find(d => d.name === focusedDistrict);
+  const card = (label, value, sub, extra) => `<div class="card ${extra||''}"><label>${label}</label><div class="value">${value}</div><div class="sub">${sub}</div></div>`;
+  document.getElementById('scoCards').innerHTML =
+    card('Districts covered', `${n} of 72`, 'reported for ' + SCO_YEAR + ' with faculty identifiable') +
+    card('Median district', fmt(med), 'median employer contribution per FT faculty') +
+    card('Range', fmt(meds[0]) + ' – ' + fmt(max), ranked[n-1].name + ' to ' + ranked[0].name) +
+    (foc ? card(focusedDistrict, fmt(foc.median), `Rank ${foc.rank} of ${n} &nbsp;·&nbsp; ${foc.median >= med ? '+' : ''}${fmt(foc.median - med).replace('$-','-$')} vs. median district`, 'highlight')
+         : card(focusedDistrict, '—', 'Not in the ' + SCO_YEAR + ' data, or faculty not identifiable', 'highlight'));
+  const q = (document.getElementById('scoSearch').value || '').toLowerCase();
+  const rows = ranked.filter(d => d.name.toLowerCase().includes(q)).sort((a, b) => scoSort.dir * (a[scoSort.key] - b[scoSort.key]));
+  document.getElementById('scoBody').innerHTML = rows.map(d => {
+    const y = yfaData.find(v => (YFA_TO_CCFS[v.name] || v.name) === d.name && v.avg != null);
+    const c = prior.find(x => x.name === d.name);
+    const alloc = c && c.allocHw != null && !c.allocExcluded && !c.excluded ? fmt(c.allocHw / c.adjFtef) : '—';
+    const diff = d.median - med, isF = d.name === focusedDistrict;
+    const color = isF ? '#2563eb' : (diff >= 0 ? '#1e8449' : '#c0392b');
+    return `<tr class="${isF ? 'yosemite' : ''}"><td class="rank">#${d.rank}</td>
+      <td class="district-name">${d.name}${d.method === 'salary range' ? ' <span title="Faculty matched by salary-schedule range because this district titles faculty by discipline." style="color:#888;cursor:help">§</span>' : ''}${isF ? '<span class="yosemite-badge">SELECTED DISTRICT</span>' : ''}</td>
+      <td class="hw-value">${fmt(d.median)}</td>
+      <td><div class="bar-cell"><div style="font-size:0.8rem;color:${color};font-weight:600;margin-bottom:3px">${diff >= 0 ? '+' : '-'}${fmt(Math.abs(diff))} vs. median</div><div class="bar-bg"><div class="bar-fill" style="width:${(d.median / max * 100).toFixed(1)}%;background:${isF ? '#2563eb' : '#6097c4'}"></div></div></div></td>
+      <td class="num">${fmt(d.mean)}</td>
+      <td class="num"${d.zero > 0.15 ? ' style="color:#b45309;font-weight:600" title="High share with no contribution reported; treat with caution."' : ''}>${(d.zero * 100).toFixed(0)}%</td>
+      <td class="num">${d.n} / ${d.ftef}</td>
+      <td class="num">${y ? fmt(y.avg) : '—'}</td>
+      <td class="num">${alloc}</td></tr>`;
+  }).join('');
+  document.getElementById('scoCount').textContent = `${rows.length} of ${n} districts`;
+  document.getElementById('scoSkippedNote').textContent = SCO_SKIPPED.length ? `Reported but not shown, because faculty could not be reliably identified or the figures are implausible: ${SCO_SKIPPED.join(', ')}.` : '';
+}
+
 // ── Tab switching ──────────────────────────────────────────────
 const TAB_SUBTITLES = {
   ccfs:  '',
   yfa:   'Fiscal Year 2025-26 &nbsp;|&nbsp; Source: YFA Benefits Survey, Spring 2026',
+  sco:   'Calendar Year 2024 &nbsp;|&nbsp; Source: State Controller, Government Compensation in California',
 };
 function corrSubtitle() {
   const base = corrDataAll.length + ' districts (CCFS + ACCCA)';
@@ -1124,6 +1246,7 @@ function showTab(id) {
   document.getElementById('headerSub').innerHTML = id === 'accca' ? acccaSubtitle() : id === 'corr' ? corrSubtitle() : TAB_SUBTITLES[id];
   if (id === 'ccfs' && !chartInitialized) initChart();
   if (id === 'corr') renderCorrTab();
+  if (id === 'sco') renderSco();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1625,7 +1748,7 @@ const SCENARIO_DESC = {
 };
 function setScenario(s) {
   currentScenario = s;
-  const sd = document.getElementById('scenarioDesc'); if (sd) sd.innerHTML = SCENARIO_DESC[s] + ' <span style="color:#999">See methodology notes below.</span>';
+  const sd = document.getElementById('scenarioDesc'); if (sd) sd.innerHTML = SCENARIO_DESC[s] + ' <span style="color:#999">See methodology notes below.</span><br><span style="color:#78350f"><strong>Scope:</strong> these CCFS-311 figures measure benefits spending attributed to full-time faculty, which also includes retiree health, workers\' compensation, unemployment insurance and coverage for other staff. They run about twice the actual employer health contribution; for that, see the State Controller tab.</span>';
   ['full','alloc','basic'].forEach(k => document.getElementById('btn-' + k).classList.toggle('active', k === s));
   document.getElementById('cth3').textContent = s === 'basic' ? 'FON FT' : 'Adj. FON FT';
   document.getElementById('cth2').title = s === 'alloc'
@@ -2223,6 +2346,8 @@ buildYfaCards();
 renderYfa();
 buildAcccaCards();
 renderAccca();
+renderSco();
+document.getElementById('scoTabBtn').textContent = 'State Controller — Actual Health Contributions — ' + SCO_DATA.length + ' Districts';
 document.getElementById('acccaTabBtn').textContent = 'ACCCA Admin Benefits — ' + ACCCA_DATA.filter(d => d.y25 != null).length + ' Districts';
 buildCorrData();
 renderCorrTab();
