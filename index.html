@@ -242,8 +242,8 @@
 <div class="container">
 
   <div class="cards">
-    <div class="card" title="H&amp;W per FT faculty — lowest to highest across all 72 districts. 'H&amp;W' = employer-paid Health &amp; Welfare benefits derived from CCFS-311."><label>Range</label><div class="value" id="cardRange"></div><div class="sub" id="cardRangeSub"></div></div>
-    <div class="card" title="Average estimated employer-paid H&amp;W per FT faculty across all 72 California Community College districts."><label>Statewide Mean</label><div class="value" id="cardMean"></div><div class="sub">72 districts</div></div>
+    <div class="card" title="H&amp;W per FT faculty — lowest to highest across all ranked districts. 'H&amp;W' = employer-paid Health &amp; Welfare benefits derived from CCFS-311."><label>Range</label><div class="value" id="cardRange"></div><div class="sub" id="cardRangeSub"></div></div>
+    <div class="card" title="Average estimated employer-paid H&amp;W per FT faculty across all ranked California Community College districts."><label>Statewide Mean</label><div class="value" id="cardMean"></div><div class="sub">72 districts</div></div>
     <div class="card" title="Middle value of estimated H&amp;W per FT faculty — half of the 72 districts spend more per faculty member, half spend less. Less affected by extreme outliers than the mean."><label>Statewide Median</label><div class="value" id="cardMedian"></div><div class="sub">50th percentile</div></div>
     <div class="card highlight" title="This district's estimated employer-paid H&amp;W per FT faculty — the primary comparison figure in this analysis."><label id="cardFocusLabel">Selected District</label><div id="cardFocusName" style="font-size:0.8rem;font-weight:600;color:#e67e22;margin-bottom:2px">Yosemite</div><div class="value" id="cardYosemite"></div><div class="sub" id="cardYosemiteRank" style="margin-bottom:3px"></div><div class="sub" id="cardYosemiteSub" style="display:flex;justify-content:space-between;gap:6px"></div><div class="sub" id="cardYosemiteMean" style="display:flex;justify-content:space-between;gap:6px;margin-top:1px"></div></div>
   </div>
@@ -279,10 +279,10 @@
     </div>
     <div style="display:flex;align-items:center;gap:18px;margin-bottom:14px;flex-wrap:wrap">
       <span style="font-size:0.75rem;font-weight:600;color:#666;text-transform:uppercase;letter-spacing:0.05em">Color key:</span>
-      <span style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#333"><span style="width:14px;height:14px;border-radius:3px;background:#27ae60;display:inline-block"></span>Top quartile (ranks 1–18)</span>
-      <span style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#333"><span style="width:14px;height:14px;border-radius:3px;background:#a8d06b;display:inline-block"></span>2nd quartile (ranks 19–36)</span>
-      <span style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#333"><span style="width:14px;height:14px;border-radius:3px;background:#f0a500;display:inline-block"></span>3rd quartile (ranks 37–54)</span>
-      <span style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#333"><span style="width:14px;height:14px;border-radius:3px;background:#e74c3c;display:inline-block"></span>Bottom quartile (ranks 55–72)</span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#333"><span style="width:14px;height:14px;border-radius:3px;background:#27ae60;display:inline-block"></span><span id="tierKey1">Top quartile (ranks 1–18)</span></span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#333"><span style="width:14px;height:14px;border-radius:3px;background:#a8d06b;display:inline-block"></span><span id="tierKey2">2nd quartile (ranks 19–36)</span></span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#333"><span style="width:14px;height:14px;border-radius:3px;background:#f0a500;display:inline-block"></span><span id="tierKey3">3rd quartile (ranks 37–54)</span></span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#333"><span style="width:14px;height:14px;border-radius:3px;background:#e74c3c;display:inline-block"></span><span id="tierKey4">Bottom quartile (ranks 55–72)</span></span>
       <span style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#2563eb;font-weight:600"><span style="width:14px;height:14px;border-radius:3px;background:#2563eb;display:inline-block"></span><span id="colorKeyFocus">Yosemite CCD</span></span>
     </div>
     <div class="chart-container"><canvas id="barChart"></canvas></div>
@@ -324,7 +324,7 @@
           <th onclick="sortCcfs(2)" id="cth2" style="text-align:right" title="Estimated employer-paid Health &amp; Welfare costs for the Instruction program (CCFS-311 Column 10, Object 3000), excluding Student Services, Administration, and other program areas. Full methodology subtracts estimated STRS (19.1%) and Medicare (1.45%) employer contributions on instructional salaries, and estimated CalPERS, Social Security and Medicare on instructional aides.">Total H&amp;W</th>
           <th onclick="sortCcfs(3)" id="cth3" style="text-align:right" title="Faculty Obligation Number full-time headcount, minus tenured/tenure-track FTEF in counseling and library roles (ASA codes 6120, 6310, 6320, 6390, 6410, 6420, 6430 — Fall 2025 CCCCO data). Hover any cell in this column to see the exact calculation for that district.">Adj. FON FT</th>
           <th onclick="sortCcfs(4)" id="cth4" style="text-align:right" title="Estimated employer-paid H&amp;W cost divided by Adjusted FON FT. This is the primary comparison metric.">H&amp;W / FT</th>
-          <th id="cth5" title="How this district's H&amp;W per FT compares to the statewide median across all 72 districts.">vs. Median</th>
+          <th id="cth5" title="How this district's H&amp;W per FT compares to the statewide median across all ranked districts.">vs. Median</th>
           <th onclick="sortCcfs(6)" id="cth6" class="comp-col" style="text-align:right" title="CFT salary study for the selected year (2025-26 or 2024-25): MA+60 units, 20 years (Step 21)">Step 21 Salary</th>
           <th onclick="sortCcfs(7)" id="cth7" class="comp-col" style="text-align:right" title="H&amp;W per FT + CFT Step 21 salary — rough estimate only">Total Comp</th>
           <th id="cth8" class="comp-col">vs. Median (Comp)</th>
@@ -1394,7 +1394,7 @@ function computeRanked(scenario) {
   return districts.filter(d => !(s.excludes && s.excludes(d)))
     .map(d => { const col = (COL_DATA[d.name]||{}).col||null; const tc = d.step21 + s.getValue(d); return { ...d, scenarioValue: s.getValue(d), scenarioHw: s.getTotalHw(d), scenarioFtef: s.getFtef(d), totalComp: tc, col, colCounty: (COL_DATA[d.name]||{}).county||'', adjComp: col ? tc * 100 / col : null }; })
     .sort((a, b) => b.scenarioValue - a.scenarioValue)
-    .map((d, i) => ({ ...d, rank: i + 1 }));
+    .map((d, i, arr) => { rankedCount = arr.length; return { ...d, rank: i + 1 }; });
 }
 
 function computeStats(ranked) {
@@ -1407,8 +1407,19 @@ function computeStats(ranked) {
   };
 }
 
+let rankedCount = 72;
 function tier(rank) {
-  return rank <= 18 ? 1 : rank <= 36 ? 2 : rank <= 54 ? 3 : 4;
+  return Math.min(4, Math.max(1, Math.ceil(rank / (rankedCount / 4))));
+}
+function updateTierKey() {
+  const names = ['Top quartile', '2nd quartile', '3rd quartile', 'Bottom quartile'];
+  let start = 1;
+  for (let t = 1; t <= 4; t++) {
+    const end = Math.floor(t * rankedCount / 4);
+    const el = document.getElementById('tierKey' + t);
+    if (el) el.textContent = `${names[t-1]} (ranks ${start}–${end})`;
+    start = end + 1;
+  }
 }
 
 // Chart
@@ -1635,6 +1646,7 @@ function setScenario(s) {
   updateChart(ranked);
   buildCcfsTable(sortedCcfsData(ranked));
   renderHistory();
+  updateTierKey();
 }
 
 // ══════════════════════════════════════════════════════════════

@@ -20,10 +20,12 @@ Each year folder holds the raw inputs used to build that year's dataset in `CCFS
 ## Counselor/librarian deductions (manual districts)
 Updated Nov 9, 2026 for Antelope Valley, Citrus, Gavilan, Lake Tahoe, Solano, Copper Mountain, and Palo Verde, using 2024 calendar-year payroll (State Controller data via Transparent California): employees with counselor or librarian titles and full-year faculty pay and benefits, excluding temporary/non-tenure-track, administrators, adjuncts, classified, and mental-health or outreach counselors. Redwoods uses its Fall 2024 seniority list. See the methodology list in index.html for the counts.
 
-## Open items (as of Nov 9, 2026)
-- Re-pull Compton, Desert, and San Joaquin Delta once they certify 2025-26, and replace their carried-forward rows. Merced, certified on Nov 6, reopened its 2025-26 report by Nov 9; its Full figures are from Nov 6 and its Allocated figure is carried from 2024-25. Re-pull once it is certified again.
-- Lassen is excluded from 2025-26 (district says the reported 18.6 FT FTEF is an error). Imperial, Rio Hondo, and Copper Mountain are flagged for unverified FTEF swings. A weekly scheduled task (Mondays) checks for the Fall 2026 FON report.
-- Pasadena is flagged in both years for uneven benefit coding. Lassen, Palo Verde, and Kern show the same pattern more mildly; Santa Barbara, West Kern, Cabrillo, San Diego, and San Bernardino show the reverse. These are not flagged individually; the Allocated calculation addresses them.
-- Allocated calculation is live but not the default. Decide whether to make it the default after review.
-- Possible backfill of 2019-20 through 2023-24. Basic is exact for those years; Full and Allocated would reuse the current counselor/librarian deductions. Allocated needs Column B, so a backfill pull must keep all columns.
-- A monthly scheduled task (10th) checks for a new ACCCA survey.
+## Open items (as of Nov 16, 2026)
+- Compton, Desert, and San Joaquin Delta certified 2025-26 by Nov 16: re-pull their 50% Law reports (all columns) and replace the carried-forward rows. Needs the portal's report forms (browser).
+- Merced and San Bernardino show as not certified for 2025-26 as of Nov 16 (both reopened). Site figures are from the Nov 6 / Nov 9 pulls; re-pull once certified. Merced's Allocated figure and aide deduction use 2024-25 data.
+- Fall 2026 FON report not yet posted (checked Nov 16). Lassen stays excluded from 2025-26; Imperial, Rio Hondo, Santa Monica, and Copper Mountain flagged. Weekly scheduled task checks for it.
+- Full Methodology now subtracts estimated aide pension/payroll taxes (aide_deduction.py). Allocated still applies the CalPERS rate to all classified salaries, including hourly; consider limiting it to regular-status lines for consistency.
+- Step 21 salaries: 2025-26 uses the CFT 2025-26 study (Oct 16, 2026); 2024-25 uses the 2024-25 study.
+- Allocated is live but not the default. Decide after review.
+- Possible backfill of 2019-20 through 2023-24 (must keep all 50% Law columns).
+- Monthly scheduled task (10th) checks for a new ACCCA survey.
