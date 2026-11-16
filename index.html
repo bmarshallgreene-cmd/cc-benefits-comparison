@@ -221,8 +221,8 @@
 
 <div class="tab-bar">
   <span class="tab-bar-label">Section:</span>
-  <button class="tab-btn active" onclick="showTab('ccfs')">CCFS-311 Benefits Spending — All 72 Districts</button>
-  <button class="tab-btn" onclick="showTab('sco')" id="scoTabBtn">State Controller — Actual Health Contributions</button>
+  <button class="tab-btn active" onclick="showTab('ccfs')">CCFS-311 Benefits Spending</button>
+  <button class="tab-btn" onclick="showTab('sco')" id="scoTabBtn">State Controller: Actual Contributions</button>
   <button class="tab-btn" onclick="showTab('accca')" id="acccaTabBtn">ACCCA Admin Benefits</button>
   <button class="tab-btn" onclick="showTab('yfa')" id="yfaTabBtn">YFA Benefits Survey</button>
   <button class="tab-btn" onclick="showTab('corr')" id="corrTabBtn">Cross-Method Analysis</button>
@@ -2347,7 +2347,7 @@ renderYfa();
 buildAcccaCards();
 renderAccca();
 renderSco();
-document.getElementById('scoTabBtn').textContent = 'State Controller — Actual Health Contributions — ' + SCO_DATA.length + ' Districts';
+document.getElementById('scoTabBtn').textContent = 'State Controller: Actual Contributions — ' + SCO_DATA.length + ' Districts';
 document.getElementById('acccaTabBtn').textContent = 'ACCCA Admin Benefits — ' + ACCCA_DATA.filter(d => d.y25 != null).length + ' Districts';
 buildCorrData();
 renderCorrTab();
