@@ -24,7 +24,7 @@ Updated Nov 9, 2026 for Antelope Valley, Citrus, Gavilan, Lake Tahoe, Solano, Co
 - Compton, Desert, and San Joaquin Delta: 2025-26 figures pulled Nov 16 after they certified (done).
 - Merced and San Bernardino show as not certified for 2025-26 as of Nov 16 (both reopened). Site figures are from the Nov 6 / Nov 9 pulls; re-pull once certified. Merced's Allocated figure and aide deduction use 2024-25 data.
 - Fall 2026 FON report not yet posted (checked Nov 16). Lassen stays excluded from 2025-26; Imperial, Rio Hondo, Santa Monica, and Copper Mountain flagged. Weekly scheduled task checks for it.
-- Full Methodology now subtracts estimated aide pension/payroll taxes (aide_deduction.py). Allocated still applies the CalPERS rate to all classified salaries, including hourly; consider limiting it to regular-status lines for consistency.
+- Full and Allocated both apply the CalPERS rate to regular-status classified pay only (aide_deduction.py, analysis/build_alloc.py).
 - Step 21 salaries: 2025-26 uses the CFT 2025-26 study (Oct 16, 2026); 2024-25 uses the 2024-25 study.
 - Allocated is live but not the default. Decide after review.
 - Possible backfill of 2019-20 through 2023-24 (must keep all 50% Law columns).
