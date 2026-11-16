@@ -26,6 +26,6 @@ Updated Nov 9, 2026 for Antelope Valley, Citrus, Gavilan, Lake Tahoe, Solano, Co
 - Fall 2026 FON report not yet posted (checked Nov 16). Lassen stays excluded from 2025-26; Imperial, Rio Hondo, Santa Monica, and Copper Mountain flagged. Weekly scheduled task checks for it.
 - Full and Allocated both apply the CalPERS rate to regular-status classified pay only (aide_deduction.py, analysis/build_alloc.py).
 - Step 21 salaries: 2025-26 uses the CFT 2025-26 study (Oct 16, 2026); 2024-25 uses the 2024-25 study.
-- Allocated is live but not the default. Decide after review.
+- Allocated is the default calculation as of Nov 16, 2026 (it agrees best with the ACCCA and YFA surveys); the Cross-Method tab uses it.
 - Possible backfill of 2019-20 through 2023-24 (must keep all 50% Law columns).
 - Monthly scheduled task (10th) checks for a new ACCCA survey.

@@ -251,11 +251,11 @@
     <span>Year:</span>
     <select id="ccfsYearSelect" class="ctrl-select" style="font-size:0.82rem;padding:6px 10px" onchange="setCcfsYear(this.value)" title="Fiscal year of CCFS-311 data (and matching fall FTEF)"></select>
     <span style="margin-left:12px">Calculation:</span>
-    <button class="scenario-btn active" id="btn-full" onclick="setScenario('full')" title="Instruction-only benefits, minus estimated pension and payroll taxes (faculty and instructional aides), ÷ counselor- and librarian-adjusted FON FT">
-      Full Methodology
-    </button>
-    <button class="scenario-btn" id="btn-alloc" onclick="setScenario('alloc')" title="District-wide health &amp; welfare (pensions, Social Security and Medicare netted out), allocated to instruction by salary share, ÷ adjusted FON FT">
+    <button class="scenario-btn active" id="btn-alloc" onclick="setScenario('alloc')" title="District-wide health &amp; welfare (pensions, Social Security and Medicare netted out), allocated to instruction by salary share, ÷ adjusted FON FT">
       Allocated
+    </button>
+    <button class="scenario-btn" id="btn-full" onclick="setScenario('full')" title="Instruction-only benefits, minus estimated pension and payroll taxes (faculty and instructional aides), ÷ counselor- and librarian-adjusted FON FT">
+      Full Methodology
     </button>
     <button class="scenario-btn" id="btn-basic" onclick="setScenario('basic')" title="Raw instruction benefits ÷ raw FON FT, no deductions">
       Basic
@@ -350,9 +350,9 @@
     <li><strong>Palo Verde</strong> — 7 counselors + 0 librarians</li>
   </ul>
   <span style="font-size:0.75rem">Unless noted, these counts come from 2024 calendar-year payroll records (State Controller data via Transparent California, updated Nov 9, 2026): employees with counselor or librarian titles and full-year faculty pay and benefits. Temporary or non-tenure-track positions, administrators, adjuncts, classified staff, and mental-health or outreach counselors are excluded. The same deductions are applied to every year.</span>
-  Calbright excluded (no FON entry). Data year: 2025-26 (CCFS-311 actuals) with Fall 2025 FT FTEF. Compton, Desert, and San Joaquin Delta certified late; their 2025-26 figures were pulled November 16, 2026. Merced and San Bernardino reopened their 2025-26 reports after the November 6 pull and showed as not certified on November 16; their figures are from the earlier pull and may change. † Lassen is excluded from 2025-26 rankings and statistics because the district says its reported Fall 2025 FT FTEF (18.6) is an error; it currently has 40–41 full-time faculty. Lassen's Fall 2021–2023 reports (19.0–24.0) are in line with the 18.6, so its Fall 2024 figure (36.1) may be the anomaly; its 2024-25 figure is flagged. Flagged but included, based on each district's Fall 2021–2025 FON reports: Imperial (2024-25 and 2025-26: 145.0 in Fall 2024 and 98.3 in Fall 2025, against 119–129 in 2021–2023); Copper Mountain (both years: volatile, 25.7–49.7); Santa Monica (2025-26: 285.2 against 324–351, possibly reflecting recent layoffs); Rio Hondo (2025-26: FT FTEF within its normal range, but instructional benefits rose 51%). In the Cross-Method tab, Lassen's 2024-25 figure is used. † Pasadena (both years): its instructional benefits are only 29% of instructional salaries, the lowest of any district (median 43%), while its non-instructional benefits are 65% of non-instructional salaries. Its faculty contract provides full PPO/HMO coverage, so its low figure most likely reflects how benefits are coded across activities rather than low benefits.
+  Calbright excluded (no FON entry). Data year: 2025-26 (CCFS-311 actuals) with Fall 2025 FT FTEF. Compton, Desert, and San Joaquin Delta certified late; their 2025-26 figures were pulled November 16, 2026. Merced and San Bernardino reopened their 2025-26 reports after the November 6 pull and showed as not certified on November 16; their figures are from the earlier pull and may change. † Lassen is excluded from 2025-26 rankings and statistics because the district says its reported Fall 2025 FT FTEF (18.6) is an error; it currently has 40–41 full-time faculty. Lassen's Fall 2021–2023 reports (19.0–24.0) are in line with the 18.6, so its Fall 2024 figure (36.1) may be the anomaly; its 2024-25 figure is flagged. Flagged but included, based on each district's Fall 2021–2025 FON reports: Imperial (2024-25 and 2025-26: 145.0 in Fall 2024 and 98.3 in Fall 2025, against 119–129 in 2021–2023); Copper Mountain (both years: volatile, 25.7–49.7); Santa Monica (2025-26: 285.2 against 324–351, possibly reflecting recent layoffs); Rio Hondo (2025-26: FT FTEF within its normal range, but instructional benefits rose 51%). In the Cross-Method tab, which uses the Allocated calculation, 2024-25 figures are used for Lassen and Mt. San Jacinto. † Pasadena (both years): its instructional benefits are only 29% of instructional salaries, the lowest of any district (median 43%), while its non-instructional benefits are 65% of non-instructional salaries. Its faculty contract provides full PPO/HMO coverage, so its low figure most likely reflects how benefits are coded across activities rather than low benefits.
   <br><br><strong>Note on instructional aides:</strong> Column 10 benefits include employer costs for instructional aides (lab technicians, tutors, and other classified instructional support staff — Object 2200/2400), who are not counted in the FON FT denominator. Their estimated pension and payroll-tax costs are subtracted (see Full Methodology), but their health benefits cannot be separated from faculty health benefits and remain in the figure. Per-FT figures are therefore still somewhat overstated in districts with many instructional aides.
-  <br><br><strong>Allocated Methodology:</strong> Some districts code benefits unevenly between instruction and other activities, which makes the instruction-only figure (Full Methodology) unreliable for them. The Allocated calculation starts from the district's total benefits across all activities (50% Law schedule, Column B, Object 3000), subtracts estimated employer pension, Social Security and Medicare costs (CalSTRS 19.1% of academic salaries; CalPERS 27.05% in 2024-25 and 26.81% in 2025-26 on regular-status classified salaries only (Objects 2100 and 2200), since hourly and temporary classified staff are assumed not to be CalPERS members; Social Security 6.2% on all classified salaries; Medicare 1.45% on all salaries), and allocates what remains to instruction by instruction's share of total salaries. The result is divided by the same Adjusted FON FT as the Full Methodology. Because it uses salary share, it assumes health costs scale with pay, which overstates them for higher-paid staff; the CCFS-311 has no headcounts to do better. It also still includes retiree health and workers' compensation, which the report does not separate. <strong>Guardrails:</strong> a district is excluded from Allocated rankings if its district-wide benefits changed by more than 40% from the prior year (usually a one-time charge outside instruction) or if its district-wide benefits are reported as equal to instruction-only benefits (a reporting error). Districts where Full and Allocated differ by more than 50% are flagged, since that indicates uneven coding.
+  <br><br><strong>Allocated Methodology (default):</strong> Allocated is the default because it agrees best with the two independent sources on this site: its district rankings correlate more closely with both the ACCCA and YFA surveys than Full or Basic do, in both years. Some districts code benefits unevenly between instruction and other activities, which makes the instruction-only figure (Full Methodology) unreliable for them. The Allocated calculation starts from the district's total benefits across all activities (50% Law schedule, Column B, Object 3000), subtracts estimated employer pension, Social Security and Medicare costs (CalSTRS 19.1% of academic salaries; CalPERS 27.05% in 2024-25 and 26.81% in 2025-26 on regular-status classified salaries only (Objects 2100 and 2200), since hourly and temporary classified staff are assumed not to be CalPERS members; Social Security 6.2% on all classified salaries; Medicare 1.45% on all salaries), and allocates what remains to instruction by instruction's share of total salaries. The result is divided by the same Adjusted FON FT as the Full Methodology. Because it uses salary share, it assumes health costs scale with pay, which overstates them for higher-paid staff; the CCFS-311 has no headcounts to do better. It also still includes retiree health and workers' compensation, which the report does not separate. <strong>Guardrails:</strong> a district is excluded from Allocated rankings if its district-wide benefits changed by more than 40% from the prior year (usually a one-time charge outside instruction) or if its district-wide benefits are reported as equal to instruction-only benefits (a reporting error). Districts where Full and Allocated differ by more than 50% are flagged, since that indicates uneven coding.
   <br><br><strong>Basic Methodology:</strong> H&amp;W estimate = Employee Benefits (3000 series, ECS 84362 A Col 10) with no deductions. Denominator = raw FON FT with no counselor or librarian adjustment. This is a simpler calculation that leaves all employer pension and payroll-tax costs (faculty STRS and Medicare, aide CalPERS and Social Security) in the benefits figure, so all values are well above Full Methodology. Useful as a quick reference or sanity check.
   <br><br><strong>COL Index (Cost of Living):</strong> A relative cost-of-living index for each district's primary county, based on the <a href="https://livingwage.mit.edu/states/06" target="_blank" style="color:#1a3a5c">MIT Living Wage Calculator</a>'s estimated living wage for one adult with no dependents (February 2026 data). The California statewide average is set to 100. A district with a COL Index of 83 is in a county roughly 17% below the state average cost of living; a district with 126 is about 26% above. <em>Green values (&lt;90) indicate lower-cost areas; red values (&gt;115) indicate higher-cost areas.</em> This index provides context for comparing H&amp;W figures across regions — the same dollar amount provides meaningfully different purchasing power depending on where a district is located. Hover any COL Index cell to see the county name. Note: multi-campus districts are assigned to their primary or largest campus county.
   <br><br><strong>Note on part-time faculty benefits:</strong> Districts that extend health &amp; welfare benefits to part-time faculty will have higher 3000-series expenditures that are not fully attributable to full-time faculty. This may cause some districts' per-FT figures to be overstated relative to districts that offer benefits only to full-time employees.
@@ -516,7 +516,7 @@
 
 </div>
 <footer>
-  Cross-method comparison for districts with data in multiple sources. <strong>CCFS-311</strong>: formula-based estimate using the Full Methodology (instruction benefits minus estimated pension and payroll taxes, divided by adjusted FON FT faculty count). <strong>YFA Survey</strong>: average (mean) annual employer-paid medical benefit per FT faculty member, collected by the Yosemite Faculty Association, Spring 2026. <strong>ACCCA Admin</strong>: mean employer-paid H&amp;W across all administrative/management positions, 2025 ACCCA Salary &amp; Benefits Survey. MiraCosta excluded (no 2025 ACCCA data). Rank badge colors follow quartile convention: green (top quartile), yellow-green, amber, red (bottom quartile).
+  Cross-method comparison for districts with data in multiple sources. <strong>CCFS-311</strong>: formula-based estimate using the Allocated calculation (district-wide health &amp; welfare allocated to instruction by salary share, divided by adjusted FON FT faculty count). <strong>YFA Survey</strong>: average (mean) annual employer-paid medical benefit per FT faculty member, collected by the Yosemite Faculty Association, Spring 2026. <strong>ACCCA Admin</strong>: mean employer-paid H&amp;W across all administrative/management positions, 2025 ACCCA Salary &amp; Benefits Survey. MiraCosta excluded (no 2025 ACCCA data). Rank badge colors follow quartile convention: green (top quartile), yellow-green, amber, red (bottom quartile).
   <br><br><span id="corrFooterAll71"><strong>Default view (CCFS + ACCCA, 71 districts):</strong> All rows show a 2-method CCFS+ACCCA confidence conclusion using ranks out of 71. Click <em>Include YFA Data</em> to add a YFA Avg Medical column — districts marked ✦ then display a 3-method confidence conclusion, with YFA ranks scaled to the same 71-district basis so conclusions match the rank badges. The scatter chart always shows all 71 districts (CCFS vs. ACCCA). Hover any Confidence cell for full rank detail.<br><br></span>
   <strong>Confidence column logic</strong> — Labels step down from strongest to weakest: <em>"Strong agreement: [tier]"</em> = all three methods place the district in the same quartile (3-method only). <em>"Moderate agreement: [tier]"</em> = two of three methods agree on the same quartile; tier label reflects the full spread of all three sources so a straddle (e.g. Q2+Q3) shows as "middle third" (3-method only). <em>"Agreement: [tier]"</em> = CCFS and ACCCA agree (default 2-method view; no adjective since only two sources are available). <em>"Likely [tier]"</em> = methods lean toward a tier but one is a clear outlier, or the two-method spread is moderate; check hover for detail. Tier labels: <em>top/bottom quartile</em> = all methods fall solidly in Q1 or Q4; <em>upper/middle/lower third</em> = methods straddle a single quartile boundary. <em>"Leans top/bottom half"</em> = spread is too wide to name a tier, but most methods point the same direction. <em>"Unclear"</em> (2-method only) = CCFS and ACCCA are sufficiently far apart (rank spread &gt; 19) and point to opposite halves of the distribution. Sort order: Strong &gt; Moderate &gt; Agreement &gt; Likely &gt; Leans &gt; Unclear. Hover any cell for individual rank detail. Known CCFS biases: self-funded ISF structures may understate CCFS for some districts (Pasadena, Riverside); instructional aide benefit bleed-in may overstate CCFS for others (West Kern, Lake Tahoe, Shasta-Tehama-Trinity).
   <br><br><strong>Spearman rank correlation</strong> measures agreement in <em>ordering</em> — whether districts that rank high on one measure also rank high on another (1.0 = perfect agreement, 0 = no relationship). Current ρ values are shown in the subtitle above the table. YFA–ACCCA is typically the strongest pair because both are survey-based measures of actual per-employee contributions. CCFS correlates moderately with survey sources, reflecting that the formula-based approach captures additional structural factors (staffing ratios, part-time coverage, object-code allocation differences) beyond what surveys directly measure. Switching from YFA max to YFA avg medical narrows the 3-method pool to districts that reported avg data.
@@ -652,7 +652,7 @@ function spearmanRho(ranks1, ranks2) {
 
 function buildCorrData() {
   // Full-72 ranking for context labels
-  const all72Sorted = [...CORR_DISTRICTS].sort((a, b) => (b.hw/b.adjFtef) - (a.hw/a.adjFtef));
+  const all72Sorted = [...CORR_DISTRICTS].sort((a, b) => (b.allocHw/b.adjFtef) - (a.allocHw/a.adjFtef));
 
   // ── Build 71-district pool: all CCFS districts that have ACCCA y25 data ──
   const pool = [];
@@ -662,7 +662,7 @@ function buildCorrData() {
     const yfaEntry = yfaData.find(y => (YFA_TO_CCFS[y.name] || y.name) === d.name && y.avg != null);
     pool.push({
       name:       d.name,
-      ccfsVal:    d.hw / d.adjFtef,
+      ccfsVal:    d.allocHw / d.adjFtef,
       acccaVal:   accca.y25,
       yfaVal:     yfaEntry ? yfaEntry.avg : null,
       inYfa:      !!yfaEntry,
@@ -1289,11 +1289,12 @@ let ccfsYear = CCFS_YEAR_LIST[CCFS_YEAR_LIST.length-1];
 let districts = CCFS_YEARS[ccfsYear].filter(d => !d.excluded);
 let excludedDistricts = CCFS_YEARS[ccfsYear].filter(d => d.excluded);
 // Correlation tab: latest year, with excluded districts carried forward from the prior year
+const corrUsable = d => d && !d.excluded && !d.allocExcluded && d.allocHw != null;
 const CORR_DISTRICTS = CCFS_YEARS[ccfsYear].map(d => {
-  if (!d.excluded) return d;
+  if (corrUsable(d)) return d;
   const prevYr = CCFS_YEAR_LIST[CCFS_YEAR_LIST.length - 2];
   const p = (CCFS_YEARS[prevYr] || []).find(x => x.name === d.name);
-  return p ? { ...p, carried: true } : null;
+  return corrUsable(p) ? { ...p, carried: true } : null;
 }).filter(Boolean);
 
 // ── Cost-of-Living index per district (MIT Living Wage Calculator, Feb 2026)
@@ -1384,7 +1385,7 @@ function flagText(d, scen) {
   return [d.flag, scen === 'alloc' ? d.allocFlag : null].filter(Boolean).join(' ');
 }
 
-let currentScenario = 'full';
+let currentScenario = 'alloc';
 let ccfsSort = { col: 0, dir: 'asc' };
 
 function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
@@ -1619,7 +1620,7 @@ function sortCcfs(col) {
 
 const SCENARIO_DESC = {
   full:  '<strong>Full Methodology:</strong> instruction-only benefits, minus estimated pension and payroll taxes (faculty STRS and Medicare; aide CalPERS and Social Security), divided by full-time faculty adjusted to remove counselors and librarians.',
-  alloc: '<strong>Allocated:</strong> the district\'s total health &amp; welfare (pensions, Social Security and Medicare netted out), allocated to instruction by salary share, divided by adjusted full-time faculty. Corrects for districts that code benefits unevenly.',
+  alloc: '<strong>Allocated (default):</strong> the district\'s total health-benefit spending, with instruction assigned a share equal to its share of payroll, divided by full-time faculty. It agrees best with the survey data and does not depend on how a district codes benefits between instruction and other activities.',
   basic: '<strong>Basic:</strong> raw instruction benefits divided by raw full-time faculty, with no deductions. A quick sanity check only.',
 };
 function setScenario(s) {
@@ -2213,7 +2214,7 @@ const sel = document.getElementById('districtSelector');
   sel.appendChild(opt);
 });
 
-setScenario('full');
+setScenario('alloc');
 TAB_SUBTITLES.ccfs = ccfsSubtitle();
 populateYearSelect();
 setCcfsYear(ccfsYear);
