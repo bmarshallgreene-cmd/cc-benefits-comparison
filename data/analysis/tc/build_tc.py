@@ -17,11 +17,10 @@ est.FON.setdefault('Butte', est.FON.get('Butte-Glenn'))
 EXCLUDE = {  # benefits field is not pension + health
     'Peralta': 'Transparent California benefits average about $4,500 and leave out pension and most health.',
     'Butte': 'Transparent California benefits run about 50% of pay, so they include costs other than pension and health.',
-    'Yuba': 'Transparent California benefits leave out pension for half of faculty, so health cannot be separated out.'}
+    'Yuba': 'Transparent California benefits leave out pension for half of faculty, so health cannot be separated out.',
+    'Lake Tahoe': 'Estimate ($10,255) is far below the published cap ($18,456-$21,030); replaced by a rate-sheet estimate.'}
+# Peralta, Butte, Yuba and Lake Tahoe appear on the site as rate-sheet estimates (method "rate"), entered by hand in index.html with the calculation in each row's note.
 LOWCONF = {
-    'San Francisco': 'Family-level estimate is well below the ACCCA survey figure; treat as approximate.',
-    'Lake Tahoe': 'Small district and 11% of faculty records do not fit the pension-plus-health pattern; treat as approximate.',
-    'Siskiyou': 'Small district with no clear tier pattern; well below the ACCCA survey figure; treat as approximate.',
     'Copper Mountain': 'Only 26 faculty and no clear tier pattern; treat as approximate.',
     'San Mateo': 'About a quarter of full-time faculty show only about $1,500 (dental and vision); they are treated as having declined medical coverage.'}
 EXTRA_NOT = {'Santa Barbara': re.compile(r'^Instructor$|^Counselor$')}  # part-time faculty titles there
