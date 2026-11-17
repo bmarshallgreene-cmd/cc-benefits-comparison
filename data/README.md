@@ -22,6 +22,7 @@ Updated Nov 9, 2026 for Antelope Valley, Citrus, Gavilan, Lake Tahoe, Solano, Co
 
 ## Open items (as of Nov 16, 2026)
 - State Controller tab added Nov 16 (calendar 2024, 45 districts; Mt. San Antonio, Riverside, San Luis Obispo and Solano use district-specific rules in analysis/sco/overrides.py; San Mateo and Ventura cannot be shown). To do: refresh with the 2025 file once more districts (including Yosemite) have reported.
+- State Controller tab now covers 69 districts: 45 from the State Controller 2024 file and 24 estimated from Transparent California 2024 payroll (analysis/tc/). Peralta, Butte and Yuba cannot be estimated.
 - State Controller tab ranks on each district's mean contribution (changed Nov 16; was median), with family-level (90th percentile), median and flat/tiered columns; North Orange County includes its $3,646 fringe allowance. Rows come from analysis/sco/build_sco.py. Rancho Santiago shows $1,750 of other pay for 68% of faculty, not yet identified.
 - Compton, Desert, and San Joaquin Delta: 2025-26 figures pulled Nov 16 after they certified (done).
 - Merced and San Bernardino show as not certified for 2025-26 as of Nov 16 (both reopened). Site figures are from the Nov 6 / Nov 9 pulls; re-pull once certified. Merced's Allocated figure and aide deduction use 2024-25 data.
