@@ -1,6 +1,6 @@
 """Builds the SCO_DATA rows for the State Controller tab (calendar 2024).
 Faculty selection = general rules (titles, else salary-schedule range) or the district rule in overrides.RULES.
-Per district: mean (headline), median, family (90th percentile, about the family-tier amount),
+Per district, among matched faculty with a contribution reported: mean (headline), median, family (90th percentile, about the family-tier amount),
 structure (flat if 70%+ of nonzero contributions are within 10% of the 90th percentile, else tiered),
 share with no contribution. North Orange County: adds the $3,646 fringe benefit allowance it pays as
 compensation (OtherPay in the file) to every figure.
@@ -14,7 +14,7 @@ D = load('2024')
 ALIAS = {'Gavilan': 'Gavilan Joint', 'San Mateo County': 'San Mateo', 'Sonoma County Junior College District': 'Sonoma', 'Sonoma County': 'Sonoma',
          'South Orange County': 'South Orange', 'Ventura County': 'Ventura', 'Foothill-De Anza': 'Foothill-DeAnza', 'San Luis Obispo County': 'San Luis Obispo'}
 FAC = re.compile(r'instructor|faculty|professor|counselor|librarian|teacher|academic|\binstr\b|\bAFT F/T', re.I)
-NOT = re.compile(r'adjunct|\badj\b|part[- ]?time|\bpt\b|p/t|hourly|stipend|release time|department c|substitute|overload|temp|community ed|non-?credit hourly|summer|intersession|stipend|assistant to|dean|director|manager|aide|technician|specialist|coordinator, class', re.I)
+NOT = re.compile(r'associate (faculty|counselor|librarian)|\bptf\b|adjunct|\badj\b|part[- ]?time|\bpt\b|p/t|hourly|stipend|release time|department c|substitute|overload|temp|community ed|non-?credit hourly|summer|intersession|stipend|assistant to|dean|director|manager|aide|technician|specialist|coordinator, class', re.I)
 FTEF = {r['district']: float(r['fall2024_ft_ftef']) for r in csv.DictReader(open('sco_2024_ft_faculty_health.csv'))}
 SKIP = {'San Mateo', 'Ventura'}
 ALLOWANCE = {'North Orange County': 3646}
@@ -45,12 +45,15 @@ for k, v in sorted(D.items()):
     ratio = len(fac) / ftef
     if k not in overrides.RULES and not (0.75 <= ratio <= 1.30): continue
     add = ALLOWANCE.get(name, 0)
-    h = sorted(r['HealthDentalVision'] + add for r in fac)
-    nz = [x for x in h if x > add]
+    allh = [r['HealthDentalVision'] for r in fac]
+    # Figures are for faculty with a contribution reported. Rows with none are mostly part-time faculty
+    # who share a full-time title (their pay is about half), plus some opt-outs; the share is kept in `zero`.
+    h = sorted(x + add for x in allh if x > 0)
+    nz = h
     p90 = h[int(len(h) * 0.9)]
     flat = sum(abs(x - p90) <= 0.10 * p90 for x in nz) / len(nz) >= 0.70
     out.append(dict(name=name, n=len(fac), ftef=ftef, mean=round(st.mean(h)), median=round(st.median(h)), family=round(p90),
-                    zero=round(sum(x <= add for x in h) / len(h), 3), structure='flat' if flat else 'tiered', method=method,
+                    zero=round(sum(x <= 0 for x in allh) / len(allh), 3), covered=len(h), structure='flat' if flat else 'tiered', method=method,
                     **({'allowance': add} if add else {})))
 if '--check' in sys.argv:
     s = open('/home/claude/cc-benefits-comparison/index.html').read()
@@ -59,5 +62,5 @@ if '--check' in sys.argv:
     print('only in site:', sorted(set(cur) - set(new)), '| only in build:', sorted(set(new) - set(cur)))
     for n_, d in new.items():
         c = cur.get(n_)
-        if c and (c['n'], c['median'], c['mean']) != (d['n'], d['median'] - d.get('allowance', 0), d['mean'] - d.get('allowance', 0)): print('DIFF', n_, c, d)
+        if c and abs(c['mean'] - d['mean']) > 0.03 * c['mean'] or (c and c['n'] != d['n']): print('CHG', n_, c['n'], '->', d['n'], '| mean', c['mean'], '->', d['mean'], '| zero', c['zero'], '->', d['zero'])
 for d in sorted(out, key=lambda d: -d['mean']): print('  ' + json.dumps(d) + ',')
