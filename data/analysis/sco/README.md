@@ -9,3 +9,9 @@ Method: rows whose Position looks like full-time faculty (instructor, faculty, p
 `rows_per_ftef` compares the matched rows with Fall 2024 FT FTEF; values far from 1 mean the title rules did not fit that district. Ventura's values are implausibly low and should not be used.
 
 Scripts expect the raw CSVs under /home/claude/work/sco/<year>/.
+
+## Validation (Nov 16, 2026)
+- Year to year: 34 districts in both the 2024 and 2025 files; median change in faculty median +5.6%.
+- Faculty vs other full-time staff in the same district: median gap +1%; 32 of 45 within 15%. Large gaps: San Jose-Evergreen, Santa Clarita, Rio Hondo, Cerritos, Shasta-Tehama-Trinity.
+- Published rates: Coast, South Orange, Marin match; Compton, Contra Costa, Mt. San Jacinto consistent with caps/rates; Allan Hancock and San Jose-Evergreen not verifiable from public documents.
+- YFA survey answers for Mt. San Jacinto ($21,188) and Compton ($17,000) equal a family-tier or cap figure, not an average, which explains their gap from the Controller medians.
