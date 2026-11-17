@@ -21,7 +21,7 @@ Each year folder holds the raw inputs used to build that year's dataset in `CCFS
 Updated Nov 9, 2026 for Antelope Valley, Citrus, Gavilan, Lake Tahoe, Solano, Copper Mountain, and Palo Verde, using 2024 calendar-year payroll (State Controller data via Transparent California): employees with counselor or librarian titles and full-year faculty pay and benefits, excluding temporary/non-tenure-track, administrators, adjuncts, classified, and mental-health or outreach counselors. Redwoods uses its Fall 2024 seniority list. See the methodology list in index.html for the counts.
 
 ## Open items (as of Nov 16, 2026)
-- State Controller tab added Nov 16 (calendar 2024, 41 districts). To do: title rules for Mt. San Antonio, Riverside, San Luis Obispo, San Mateo, Solano; refresh with the 2025 file once more districts (including Yosemite) have reported.
+- State Controller tab added Nov 16 (calendar 2024, 45 districts; Mt. San Antonio, Riverside, San Luis Obispo and Solano use district-specific rules in analysis/sco/overrides.py; San Mateo and Ventura cannot be shown). To do: refresh with the 2025 file once more districts (including Yosemite) have reported.
 - Compton, Desert, and San Joaquin Delta: 2025-26 figures pulled Nov 16 after they certified (done).
 - Merced and San Bernardino show as not certified for 2025-26 as of Nov 16 (both reopened). Site figures are from the Nov 6 / Nov 9 pulls; re-pull once certified. Merced's Allocated figure and aide deduction use 2024-25 data.
 - Fall 2026 FON report not yet posted (checked Nov 16). Lassen stays excluded from 2025-26; Imperial, Rio Hondo, Santa Monica, and Copper Mountain flagged. Weekly scheduled task checks for it.
