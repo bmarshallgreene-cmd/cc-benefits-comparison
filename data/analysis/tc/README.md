@@ -14,3 +14,9 @@ Fills in the State Controller tab for districts missing from the State Controlle
 - Corroborated: San Francisco (2024 SFHSS rates for City College faculty: Kaiser $10,028 / $17,148 / $19,693 a year), Siskiyou (contract caps before 2025-26: $9,391 / $15,200 / $22,220 including dental and vision), Copper Mountain (contract: full premium up to $820 / $1,320 / $1,770 a month; HMO members pay at most $75 / $150 / $200 above), San Mateo (published 2024 medical contributions $12,257 / $21,572 / $28,044; the ~$1,500 group matches dental and vision only).
 - Lake Tahoe: Transparent California estimate dropped; faculty cap $18,456 through 2023-24 (FA CBA 2022-25), $21,030 for other groups in 2024-25; site uses ~$19,743 for calendar 2024.
 - Rate-sheet estimates added for Peralta (Kaiser fully paid, 2024-25 benefit guide; average = 71% of family level, the median ratio among 46 tiered districts), Butte (flat contribution, BCEA 2024-27 Art. 12.5 COLA formula backed out from $1,881.81/month in 2026-27), Yuba (2024-25 certificated plan rates; Premier plan shown).
+
+## State Controller 2023 file (Nov 17)
+- 44 districts; none of the rate-sheet districts (Peralta, Butte, Yuba, Lake Tahoe) reported.
+- Overlap with Transparent California estimates: West Hills SCO 2023 $17,535 vs TC 2024 $18,634 (+6.3%); San Bernardino $14,934 vs $16,535 (+10.7%); Santa Barbara $20,114 (2023) and $23,271 (2025) vs TC 2024 $25,390 -> TC ~17% high; site now uses the 2023/2025 midpoint ($21,693, method "interp").
+- San Joaquin Delta and Ventura report almost no health in 2023 as well (means ~$3,400), so their State Controller data stays unusable; Riverside and Solano report none in 2023.
+- 2023 -> 2024 change in the average, 32 districts with comparable data: median +7.4% (IQR +5.3% to +12.1%); Yosemite +7.4%. Foothill-De Anza (+95%) and North Orange County (+52%) changed how they report and are left out of that comparison.
