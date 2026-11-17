@@ -13,5 +13,5 @@ Scripts expect the raw CSVs under /home/claude/work/sco/<year>/.
 ## Validation (Nov 16, 2026)
 - Year to year: 34 districts in both the 2024 and 2025 files; median change in faculty median +5.6%.
 - Faculty vs other full-time staff in the same district: median gap +1%; 32 of 45 within 15%. Large gaps: San Jose-Evergreen, Santa Clarita, Rio Hondo, Cerritos, Shasta-Tehama-Trinity.
-- Published rates: Coast, South Orange, Marin match; Compton, Contra Costa, Mt. San Jacinto consistent with caps/rates; Allan Hancock and San Jose-Evergreen not verifiable from public documents.
+- Published rates (12 districts with figures, none contradicted): close matches Coast, El Camino, State Center, Chabot-Las Positas, South Orange, Marin, West Valley-Mission; consistent Compton, Contra Costa, Grossmont-Cuyamaca, Santa Monica, Mt. San Jacinto (low, still a question). Not verifiable from public documents: Allan Hancock, San Jose-Evergreen, Foothill-De Anza, Kern, Los Angeles, Los Rios, Merced, Palomar, Rancho Santiago.
 - YFA survey answers for Mt. San Jacinto ($21,188) and Compton ($17,000) equal a family-tier or cap figure, not an average, which explains their gap from the Controller medians.
