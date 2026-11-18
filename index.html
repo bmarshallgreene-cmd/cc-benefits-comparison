@@ -224,7 +224,7 @@
 <div class="tab-bar">
   <span class="tab-bar-label">Section:</span>
   <button class="tab-btn active" onclick="showTab('ccfs')">CCFS-311 Benefits Spending</button>
-  <button class="tab-btn" onclick="showTab('sco')" id="scoTabBtn">State Controller: Actual Contributions</button>
+  <button class="tab-btn" onclick="showTab('sco')" id="scoTabBtn">Reported Contributions</button>
   <button class="tab-btn" onclick="showTab('accca')" id="acccaTabBtn">ACCCA Admin Benefits</button>
   <button class="tab-btn" onclick="showTab('yfa')" id="yfaTabBtn">YFA Benefits Survey</button>
   <button class="tab-btn" onclick="showTab('corr')" id="corrTabBtn">Cross-Method Analysis</button>
@@ -1785,7 +1785,7 @@ const SCENARIO_DESC = {
 };
 function setScenario(s) {
   currentScenario = s;
-  const sd = document.getElementById('scenarioDesc'); if (sd) sd.innerHTML = SCENARIO_DESC[s] + ' <span style="color:#999">See methodology notes below.</span><br><span style="color:#78350f"><strong>Scope:</strong> these CCFS-311 figures measure benefits spending attributed to full-time faculty, which also includes retiree health, workers\' compensation, unemployment insurance and coverage for other staff. They run about twice the actual employer health contribution; for that, see the State Controller tab.</span>';
+  const sd = document.getElementById('scenarioDesc'); if (sd) sd.innerHTML = SCENARIO_DESC[s] + ' <span style="color:#999">See methodology notes below.</span><br><span style="color:#78350f"><strong>Scope:</strong> these CCFS-311 figures measure benefits spending attributed to full-time faculty, which also includes retiree health, workers\' compensation, unemployment insurance and coverage for other staff. They run about twice the actual employer health contribution; for that, see the Reported Contributions tab.</span>';
   ['full','alloc','basic'].forEach(k => document.getElementById('btn-' + k).classList.toggle('active', k === s));
   document.getElementById('cth3').textContent = s === 'basic' ? 'FON FT' : 'Adj. FON FT';
   document.getElementById('cth2').title = s === 'alloc'
@@ -2384,7 +2384,7 @@ renderYfa();
 buildAcccaCards();
 renderAccca();
 renderSco();
-document.getElementById('scoTabBtn').textContent = 'Actual Health Contributions — ' + SCO_DATA.length + ' Districts';
+document.getElementById('scoTabBtn').textContent = 'Reported Contributions — ' + SCO_DATA.length + ' Districts';
 document.getElementById('acccaTabBtn').textContent = 'ACCCA Admin Benefits — ' + ACCCA_DATA.filter(d => d.y25 != null).length + ' Districts';
 buildCorrData();
 renderCorrTab();
